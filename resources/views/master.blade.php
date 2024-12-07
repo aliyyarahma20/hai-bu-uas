@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="flex flex-col h-screen">
-        <nav class="bg-gray-800 text-white py-4 px-6 flex items-center justify-between">
+        {{-- <nav class="bg-gray-800 text-white py-4 px-6 flex items-center justify-between">
             <div class="flex items-center">
                 <a href="{{ route('home') }}" class="flex items-center">
                     <img src="{{ asset('logo.png') }}" alt="Mind-do! Logo" class="h-8 mr-2">
@@ -47,7 +47,8 @@
                     <span class="absolute top-0 right-0 inline-block w-3 h-3 bg-red-600 rounded-full text-white font-medium text-xs leading-none pt-1">3</span>
                 </a>
             </div>
-        </nav>
+        </nav> --}}
+        
 
         <main class="flex-1 overflow-y-auto">
             @yield('content')
