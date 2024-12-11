@@ -2,8 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Foundation\Auth\User as AuthUser;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RolePermissionSeeder extends Seeder
 {
@@ -22,7 +26,7 @@ class RolePermissionSeeder extends Seeder
 
         foreach($permissions as $permission){
             Permission::create([
-                'name' => $permission
+                'name' => $permission,
             ]);
         }
 
@@ -38,14 +42,19 @@ class RolePermissionSeeder extends Seeder
         ]);
 
         $studentRole = Role::create([
-            'view modules',
+            'name' => 'student'
         ]);
+
+        $studentRole->givePermissionTo([
+            'view modules'
+        ]);
+
 
         // superadmin
         $user = User::create([
             'name' => 'Treece',
             'email' => 'daughterofzain@gmail.com',
-            'password' => bcrypt('1223334444')
+            'password' => bcrypt('1223334444'),
         ]);
 
         $user->assignRole($adminRole);
