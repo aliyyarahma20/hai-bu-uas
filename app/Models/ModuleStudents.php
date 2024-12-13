@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class StudentAnswer extends Model
+class ModuleStudents extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -14,8 +14,5 @@ class StudentAnswer extends Model
         'id',
     ];
 
-    public function question(){
-        return $this->belongsTo(Question::class, 'question_id');
-    }
-    
+   
 }

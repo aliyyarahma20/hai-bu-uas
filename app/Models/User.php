@@ -44,4 +44,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function modulebahasa(){
+        return $this->belongsToMany(ModuleBahasa::class, 'module_students', 'user_id', 'module_bahasa_id');
+    }
+
+    public function userprogess(){
+        return $this->belongsToMany(ModuleBahasa::class, 'user_progress', 'user_id', 'module_bahasa_id');
+    }
 }

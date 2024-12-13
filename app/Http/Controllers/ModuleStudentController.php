@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\QuizBahasa;
+use App\Models\ModuleStudents;
 use Illuminate\Http\Request;
 
-class QuizBahasaController extends Controller
+class ModuleStudentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class QuizBahasaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(QuizBahasa $quizBahasa)
+    public function show(ModuleStudents $moduleStudents)
     {
         //
     }
@@ -42,7 +42,7 @@ class QuizBahasaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(QuizBahasa $quizBahasa)
+    public function edit(ModuleStudents $moduleStudents)
     {
         //
     }
@@ -50,7 +50,7 @@ class QuizBahasaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, QuizBahasa $quizBahasa)
+    public function update(Request $request, ModuleStudents $moduleStudents)
     {
         //
     }
@@ -58,7 +58,7 @@ class QuizBahasaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(QuizBahasa $quizBahasa)
+    public function destroy(ModuleStudents $moduleStudents)
     {
         //
     }

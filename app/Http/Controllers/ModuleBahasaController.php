@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Bahasa;
+use App\Models\ModuleBahasa;
 use Illuminate\Http\Request;
 
-class BahasaController extends Controller
+class ModuleBahasaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,6 +13,7 @@ class BahasaController extends Controller
     public function index()
     {
         //
+        return 'Pengelolaan Module Bahasa';
     }
 
     /**
@@ -34,7 +35,7 @@ class BahasaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Bahasa $bahasa)
+    public function show(ModuleBahasa $moduleBahasa)
     {
         //
     }
@@ -42,7 +43,7 @@ class BahasaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Bahasa $bahasa)
+    public function edit(ModuleBahasa $moduleBahasa)
     {
         //
     }
@@ -50,7 +51,7 @@ class BahasaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Bahasa $bahasa)
+    public function update(Request $request, ModuleBahasa $moduleBahasa)
     {
         //
     }
@@ -58,7 +59,7 @@ class BahasaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Bahasa $bahasa)
+    public function destroy(ModuleBahasa $moduleBahasa)
     {
         //
     }
