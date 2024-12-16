@@ -54,29 +54,67 @@ Proyek ini adalah platform belajar bahasa daerah menggunakan **Laravel**, **Bree
 
 1. **Clone Repository**
    ```bash
-   git clone https://github.com/username/project-laravel.git
+   git clone https://github.com/aliyyarahma20/hai-bu.git
    cd project-laravel
 2. **Install Dependencies**
-    ```bash
-     composer install
-     npm install
-3. *Setup Environment*
-    ```bash
-     composer install 
-     npm install
+   ```bash
+   composer install
+   npm install     
+3. **Setup Environment**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
 4. **Konfigurasi Database**
+   ```bash
+   DB_DATABASE=nama_database
+   DB_USERNAME=username
+   DB_PASSWORD=password   
+5. **Migrasi Database**
     Edit file .env dan sesuaikan pengaturan database:
-    ```bash
-     DB_DATABASE=nama_database
-     DB_USERNAME=username
-     DB_PASSWORD=password
-5. *Migrasi Database*
-    ```bash
-     php artisan migrate --seed
-5. **Jalankan Vite dan Server Laravel**
-    ```bash
-     npm run dev
-     php artisan serve
-6. *Migrasi Database*
+   ```bash
+   php artisan migrate --seed
+6. **Jalankan Vite dan Server Laravel**
+   ```bash
+   npm run dev
+   php artisan serve
+7. **Akses Aplikasi**
     Buka browser dan kunjungi:
-    http://localhost:8000
+    http://localhost:
+   
+---
+
+## 📂 Struktur Folder Utama
+
+- **`app/Http/Controllers`** → Menangani logika aplikasi dan request.  
+- **`app/Models`** → Model untuk database.  
+- **`database/migrations`** → File migrasi untuk struktur database.  
+- **`database/seeders`** → Seeder untuk data awal, seperti pengguna dan peran.  
+- **`resources/views`** → File Blade untuk antarmuka pengguna (UI).  
+- **`routes/web.php`** → Routing web aplikasi.  
+- **`public/`** → Aset publik seperti gambar, CSS, dan JavaScript.  
+- **`resources/css`** → File Tailwind CSS dan styling lainnya.  
+- **`resources/js`** → File JavaScript dan integrasi frontend.  
+- **`storage/`** → Menyimpan cache, file log, dan data lainnya.  
+
+---
+
+## 👥 Role Pengguna
+
+| Role      | Deskripsi                                   |
+|-----------|--------------------------------------------|
+| **Admin** | Mengelola pengguna, materi, dan leaderboard. |
+| **Siswa** | Belajar materi, mengerjakan kuis, dan melihat skor. |
+
+---
+
+## 🚀 Deployment
+
+1. **Deploy**
+   ```bash
+   npm run build
+   php artisan optimize
+
+---
+
+## 🎉 Terima Kasih!
+Semoga proyek ini memberikan dampak positif bagi pembelajaran bahasa daerah Indonesia. 😊
