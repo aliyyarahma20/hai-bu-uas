@@ -1,25 +1,22 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+🌟 Website Belajar Bahasa Daerah
+Proyek ini adalah platform belajar bahasa daerah menggunakan Laravel, Breeze, Spatie, dan Tailwind CSS. Website ini dirancang untuk membantu siswa memahami dan mempelajari lima bahasa daerah Indonesia dengan fitur menarik seperti leaderboard, student tracking, dan user-friendly interface.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
-
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+📚 Fitur Utama
+1. Belajar Bahasa Daerah
+    - Tersedia 5 bahasa daerah: Jawa, Sunda, Madura, Bali, dan Minang.
+    - Level pembelajaran: Ngoko, Madya, Krama (untuk bahasa Jawa dan serupa).
+2. Leaderboard
+    - Menampilkan peringkat siswa berdasarkan progress dan nilai.
+3. Student Tracking
+    - Guru dapat melacak progress belajar siswa secara real-time.
+4. Autentikasi Pengguna
+   - Menggunakan Laravel Breeze untuk sistem login dan registrasi.
+5. Role Management
+   - Dibangun dengan Spatie Laravel Permission untuk membedakan peran pengguna:
+        - Admin: Mengelola konten dan pengguna.
+        - Siswa: Mengakses materi dan menyelesaikan kuis.
+6. Responsive UI
+   - Tampilan dibuat dengan Tailwind CSS, memastikan pengalaman pengguna yang baik di berbagai perangkat.
 
 ## Learning Laravel
 
