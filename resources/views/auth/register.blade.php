@@ -15,7 +15,7 @@
 </head>
 <body class="bg-gray-100 flex justify-center items-center min-h-screen relative">
 
-    <!-- Tombol Panah ke Kiri -->
+    <!-- Tombol Panah ke Kiri
     <a
     class="absolute top-20 left-16 m-8 inline-block rounded-full border border-[#4B5945] bg-[#4B5945] p-3 text-white hover:bg-transparent hover:text-[#4B5945] focus:outline-none focus:ring active:text-indigo-500"
     style="left: 250px;"
@@ -23,7 +23,7 @@
     >
     <span class="sr-only"> Kembali </span>
 
-    <!-- Ikon Panah ke Kiri -->
+        Ikon Panah ke Kiri
     <svg
         class="size-5"
         xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +38,7 @@
         d="M14 19l-7-7m0 0l7-7m-7 7h14"
         />
     </svg>
-    </a>
+    </a> -->
 
     <!-- Container utama untuk slide -->
     <div class="relative w-full max-w-4xl bg-white shadow-lg rounded-lg overflow-hidden flex">

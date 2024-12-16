@@ -12,7 +12,7 @@
     <header class="text-slate-700 relative mx-auto flex flex-col overflow-hidden px-8 py-8 lg:flex-row lg:items-center bg-white  sticky  top-0 w-full z-50">
         <a href="#" class="flex items-center whitespace-nowrap text-2xl font-black">
             <span>
-                <img  class="h-16 w-auto" src="./image/hai-bu.png" alt="" />
+                <img  class="h-16 w-auto" src="{{asset('image/hai-bu.png')}}" alt="" />
             </span>
         </a>
             <input type="checkbox" class="peer hidden" id="navbar-open" />
@@ -26,7 +26,7 @@
             <li class="lg:mr-12"><a class="text-[16px] font-bold text-[#4B5945] hover:text-[#91AC8F] hover:underline underline-offset-4 transition-all duration-300" href="#home">Beranda</a></li>
             <li class="lg:mr-12"><a class="text-[16px] font-bold text-[#4B5945] hover:text-[#91AC8F] hover:underline underline-offset-4 transition-all duration-300" href="#about-us">Tentang Kami</a></li>
             <li class="lg:mr-12"><a class="text-[16px] font-bold text-[#4B5945] hover:text-[#91AC8F] hover:underline underline-offset-4 transition-all duration-300" href="#fun-fact">Fakta Menarik</a></li>
-            <li class="lg:mr-12"><a class="text-[16px] font-bold text-[#4B5945] hover:text-[#91AC8F] hover:underline underline-offset-4 transition-all duration-300" href="#footer">Components</a></li>
+            <li class="lg:mr-12"><a class="text-[16px] font-bold text-[#4B5945] hover:text-[#91AC8F] hover:underline underline-offset-4 transition-all duration-300" href="#footer">Kontak</a></li>
         </ul>
         <hr class="mt-4 w-full lg:hidden" />
         <div class="my-4 flex items-center space-x-6 space-y-2 lg:my-0 lg:ml-auto lg:space-x-8 lg:space-y-0">
@@ -327,7 +327,8 @@
                 </div>
                 </div>
             
-                <p class="text-xs text-[#4B5945]">&copy; 2024 hai-bu | Bahasa Lestari, Satukan Generasi.</p>
+                <p class="text-xs text-[#4B5945]">&copy; 2024 hai-bu. Itenas <br>
+                Bahasa Lestari, Satukan Generasi.</p>
             </div>
             </footer>
         </section>

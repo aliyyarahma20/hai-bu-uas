@@ -26,7 +26,7 @@ Route::get('/', function () {
 })->name('landingpage');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('users.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
