@@ -1,63 +1,59 @@
-🌟 Website Belajar Bahasa Daerah
-Proyek ini adalah platform belajar bahasa daerah menggunakan Laravel, Breeze, Spatie, dan Tailwind CSS. Website ini dirancang untuk membantu siswa memahami dan mempelajari lima bahasa daerah Indonesia dengan fitur menarik seperti leaderboard, student tracking, dan user-friendly interface.
+# 🌟 Website Belajar Bahasa Daerah
 
-📚 Fitur Utama
-1. Belajar Bahasa Daerah
-    - Tersedia 5 bahasa daerah: Jawa, Sunda, Madura, Bali, dan Minang.
-    - Level pembelajaran: Ngoko, Madya, Krama (untuk bahasa Jawa dan serupa).
-2. Leaderboard
-    - Menampilkan peringkat siswa berdasarkan progress dan nilai.
-3. Student Tracking
-    - Guru dapat melacak progress belajar siswa secara real-time.
-4. Autentikasi Pengguna
-   - Menggunakan Laravel Breeze untuk sistem login dan registrasi.
-5. Role Management
-   - Dibangun dengan Spatie Laravel Permission untuk membedakan peran pengguna:
-        - Admin: Mengelola konten dan pengguna.
-        - Siswa: Mengakses materi dan menyelesaikan kuis.
-6. Responsive UI
-   - Tampilan dibuat dengan Tailwind CSS, memastikan pengalaman pengguna yang baik di berbagai perangkat.
+Proyek ini adalah platform belajar bahasa daerah menggunakan **Laravel**, **Breeze**, **Spatie**, dan **Tailwind CSS**. Website ini membantu siswa mempelajari 5 bahasa daerah dengan fitur seperti **leaderboard**, **student tracking**, dan antarmuka yang responsif.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 📚 Fitur Utama
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+1. **Belajar Bahasa Daerah**  
+   - Bahasa: Jawa, Sunda, Madura, Bali, Minang.  
+   - Level Pembelajaran: Ngoko, Madya, Krama (sesuai struktur bahasa).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+2. **Leaderboard**  
+   - Menampilkan peringkat siswa berdasarkan progres dan nilai.
 
-## Laravel Sponsors
+3. **Student Tracking**  
+   - Guru dapat memantau perkembangan siswa secara real-time.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+4. **Autentikasi dan Role Management**  
+   - Menggunakan **Laravel Breeze** dan **Spatie Permission**.  
+   - Role Pengguna:  
+     - **Admin**: Kelola konten dan pengguna.  
+     - **Guru**: Pantau progres siswa.  
+     - **Siswa**: Akses materi dan kuis.
 
-### Premium Partners
+5. **UI Responsif**  
+   - Dibangun dengan **Tailwind CSS** untuk tampilan modern dan responsif di berbagai perangkat.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+---
 
-## Contributing
+## 🛠️ Teknologi yang Digunakan
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+| Teknologi             | Deskripsi                          |
+|------------------------|------------------------------------|
+| **Laravel 10**         | Framework backend PHP.            |
+| **Laravel Breeze**     | Autentikasi pengguna.             |
+| **Spatie Permission**  | Role-based access control (RBAC). |
+| **Tailwind CSS**       | Framework CSS modern.             |
+| **Vite**               | Build tool frontend.              |
+| **MySQL**              | Database untuk penyimpanan data.  |
+| **Alpine.js**          | Library interaktivitas frontend.  |
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 🖥️ Instalasi Proyek
 
-## Security Vulnerabilities
+### Persyaratan Sistem
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- **PHP** >= 8.1  
+- **Composer**  
+- **Node.js** & **npm**  
+- **MySQL**  
 
-## License
+### Langkah Instalasi
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. **Clone Repository**
+   ```bash
+   git clone https://github.com/username/project-laravel.git
+   cd project-laravel
