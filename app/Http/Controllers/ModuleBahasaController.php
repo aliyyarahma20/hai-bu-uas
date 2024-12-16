@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\ModuleBahasa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class ModuleBahasaController extends Controller
 {
@@ -13,7 +17,10 @@ class ModuleBahasaController extends Controller
     public function index()
     {
         //
-        return 'Pengelolaan Module Bahasa';
+        $modules = ModuleBahasa::orderBy('id', 'DESC')->get();
+        return view('admin.modul.index', [
+            'modules'=> $modules
+        ]);
     }
 
     /**
@@ -22,6 +29,10 @@ class ModuleBahasaController extends Controller
     public function create()
     {
         //
+        $categories = Category::all();
+        return view('admin.modul.create', [
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -30,7 +41,33 @@ class ModuleBahasaController extends Controller
     public function store(Request $request)
     {
         //
+        $validated = $request ->validate([
+            'nama' => 'required|string|max:225',
+            'description' => 'required|string',
+            'categories_id' => 'required|integer',
+            'cover' => 'required|image|mimes:jpeg,png,jpg,gif',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            if ($request->hasFile('cover')){
+                $coverPath = $request->file('cover')->store('produc_covers', 'public');
+                $validated['cover'] = $coverPath;
+            }
+            $validated['slug']= Str::slug($validated['nama']);
+            $newModule = ModuleBahasa::create($validated);
+            DB::commit();
+            return redirect()->route('dashboard.module-bahasa.index');
+        }
+        catch (\Exception $e){
+            DB::rollBack();
+            $error = ValidationException::withMessages([
+                'system_error' => ['System error!', $e->getMessage()],
+            ]);
+            throw $error;
+        }
     }
+
 
     /**
      * Display the specified resource.
@@ -38,6 +75,15 @@ class ModuleBahasaController extends Controller
     public function show(ModuleBahasa $moduleBahasa)
     {
         //
+        $students = $moduleBahasa->students()->orderBy('id', 'DESC')->get();
+        $questions = $moduleBahasa->question()->orderBy('id', 'DESC')->get();
+
+
+        return view('admin.modul.manage', [
+            'modules' => $moduleBahasa,
+            'students' => $students,
+            'questions' => $questions,
+        ]);
     }
 
     /**
@@ -46,6 +92,11 @@ class ModuleBahasaController extends Controller
     public function edit(ModuleBahasa $moduleBahasa)
     {
         //
+        $categories = Category::all();
+        return view('admin.modul.edit', [
+            'modules'=> $moduleBahasa,
+            'categories'=> $categories
+        ]);
     }
 
     /**
@@ -54,6 +105,32 @@ class ModuleBahasaController extends Controller
     public function update(Request $request, ModuleBahasa $moduleBahasa)
     {
         //
+        $validated = $request ->validate([
+            'nama' => 'required|string|max:225',
+            'description' => 'required|string',
+            'categories_id' => 'required|integer',
+            'cover' => 'sometimes|image|mimes:jpeg,png,jpg,gif',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            if ($request->hasFile('cover')){
+                $coverPath = $request->file('cover')->store('produc_covers', 'public');
+                $validated['cover'] = $coverPath;
+            }
+            $validated['slug']= Str::slug($validated['nama']);
+            $moduleBahasa->update($validated);
+
+            DB::commit();
+            return redirect()->route('dashboard.module-bahasa.index');
+        }
+        catch (\Exception $e){
+            DB::rollBack();
+            $error = ValidationException::withMessages([
+                'system_error' => ['System error!', $e->getMessage()],
+            ]);
+            throw $error;
+        }
     }
 
     /**
@@ -62,5 +139,16 @@ class ModuleBahasaController extends Controller
     public function destroy(ModuleBahasa $moduleBahasa)
     {
         //
+        try{
+            $moduleBahasa->delete();
+            return redirect()->route('dashboard.module-bahasa.index')->with('success', 'Modul berhasil dihapus.');
+        }
+        catch (\Exception $e){
+            DB::rollBack();
+            $error = ValidationException::withMessages([
+                'system_error' => ['System error!', $e->getMessage()],
+            ]);
+            throw $error;
+        }  
     }
 }

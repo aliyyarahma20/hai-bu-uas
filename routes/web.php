@@ -39,15 +39,15 @@ Route::middleware('auth')->group(function () {
         Route::resource('module-bahasa',ModuleBahasaController::class)
         ->middleware('role:admin');
 
-        Route::get('module-bahasa/quiz/question/create/{quiz}', [QuestionController::class, 'create'])
+        Route::get('/question/create/{modules}', [QuestionController::class, 'create'])
         ->middleware('role:admin')
-        ->name('module-bahasa.quiz.question.create');
+        ->name('module-bahasa.create.question');
 
         Route::post('/quiz/question/save/{quiz}', [QuestionController::class, 'store'])
         ->middleware('role:admin')
-        ->name('module-bahasa.quiz.create.question.store');
+        ->name('module-bahasa.create.question.store');
 
-        Route::resource('quiz-question', QuizController::class)
+        Route::resource('question', QuestionController::class)
         ->middleware('role:admin');
 
         Route::get('/module-bahasa/students/show/{module-bahasa}', [ModuleStudentController::class, 'index'])

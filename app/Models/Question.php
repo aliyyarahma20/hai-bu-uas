@@ -14,8 +14,8 @@ class Question extends Model
         'id',
     ];
 
-    public function quiz(){
-        return $this->belongsTo(Quiz::class);
+    public function modulebahasa(){
+        return $this->belongsTo(ModuleBahasa::class);
     }
 
     public function answer(){

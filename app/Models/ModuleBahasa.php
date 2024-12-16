@@ -15,11 +15,11 @@ class ModuleBahasa extends Model
     ];
 
     public function category(){
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->belongsTo(Category::class, 'categories_id');
     }
 
-    public function quiz(){
-        return $this->hasMany(Quiz::class, 'module_bahasa_id', 'id');
+    public function question(){
+        return $this->hasMany(Question::class, 'module_bahasa_id', 'id');
     }
 
     public function students(){
