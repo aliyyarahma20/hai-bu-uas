@@ -55,7 +55,7 @@ Proyek ini adalah platform belajar bahasa daerah menggunakan **Laravel**, **Bree
 1. **Clone Repository**
    ```bash
    git clone https://github.com/aliyyarahma20/hai-bu.git
-   cd project-laravel
+   cd hai-bu
 2. **Install Dependencies**
    ```bash
    composer install
@@ -66,7 +66,7 @@ Proyek ini adalah platform belajar bahasa daerah menggunakan **Laravel**, **Bree
    php artisan key:generate
 4. **Konfigurasi Database**
    ```bash
-   DB_DATABASE=nama_database
+   DB_DATABASE=hai_bu
    DB_USERNAME=username
    DB_PASSWORD=password   
 5. **Migrasi Database**
