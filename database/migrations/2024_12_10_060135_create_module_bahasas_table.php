@@ -15,11 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->string('slug');
-            $table->foreignId('Category_id')->constrained()->onDelete('cascade');
+            $table->foreignId('categories_id')->constrained()->onDelete('cascade');
             $table->string('cover');
-            $table->string('judul');
             $table->string('description');
-            $table->SoftDeletes();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

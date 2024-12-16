@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('arti');
             $table->string('jenis_kata');
             $table->string('con_kalimat');
-            $table->foreignId('Category_id')->constrained()->onDelete('cascade');
+            $table->foreignId('categories_id')->constrained()->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
