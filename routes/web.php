@@ -9,6 +9,7 @@ use App\Http\Controllers\QuizController;
 use App\Http\Controllers\StudentAnswerController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KamusController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,8 +27,29 @@ Route::get('/', function () {
 })->name('landingpage');
 
 Route::get('/dashboard', function () {
-    return view('users.dashboard');
+    $user = auth()->user();
+    
+    if ($user->hasRole('admin')) {
+        return redirect()->route('admin.dashboard');
+    } elseif ($user->hasRole('user')) {
+        return redirect()->route('user.dashboard');
+    }
+
+    return redirect('/'); // Default redirect jika role tidak terdefinisi
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+// Admin Dashboard
+Route::get('/admin/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'role:admin'])->name('admin.dashboard');
+
+// User Dashboard
+Route::get('/user/dashboard', function () {
+    return view('users.dashboard_user');
+})->middleware(['auth', 'role:student'])->name('user.dashboard');
+
+Route::get('/dashboard', [LearningController::class, 'index'])->name('dashboard');
+Route::get('/kamus', [KamusController::class, 'index'])->name('kamus');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
