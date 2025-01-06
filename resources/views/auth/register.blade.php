@@ -65,20 +65,36 @@
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
                         <div class="mb-4">
-                            <label for="username" class="block text-sm mb-2">Nama Pengguna</label>
+                            <label for="username" :value="__('Name')" class="block text-sm mb-2">Nama Pengguna</label>
                             <input type="text" id="username" name="name" placeholder="nama anda" class="w-full px-4 py-2 rounded-lg bg-gray-100 text-gray-900 focus:ring-2 focus:ring-[#B2C9AD] focus:outline-none">
+                            <x-input-error :messages="$errors->get('name')" class="mt-2  text-yellow-500" />
                         </div>
                         <div class="mb-4">
-                            <label for="email-register" class="block text-sm mb-2">Email</label>
-                            <input type="email" id="email-register" name="email" placeholder="alamat email" class="w-full px-4 py-2 rounded-lg bg-gray-100 text-gray-900 focus:ring-2 focus:ring-[#B2C9AD] focus:outline-none">
+                            <label for="email-register" :value="__('Email')" class="block text-sm mb-2">Email</label>
+                            <input type="email" 
+                                   id="email-register" 
+                                   name="email" 
+                                   placeholder="alamat email" 
+                                   class="w-full px-4 py-2 rounded-lg bg-gray-100 text-gray-900 focus:ring-2 focus:ring-[#B2C9AD] focus:outline-none">
+                            <x-input-error :messages="$errors->get('email')" class="mt-2  text-yellow-500" />
                         </div>
                         <div class="mb-6">
-                            <label for="password-register" class="block text-sm mb-2">Sandi</label>
-                            <input type="password" id="password-register" name="password" placeholder="kata sandi" class="w-full px-4 py-2 rounded-lg bg-gray-100 text-gray-900 focus:ring-2 focus:ring-[#B2C9AD] focus:outline-none">
+                            <label for="password-register" :value="__('Password')" class="block text-sm mb-2">Sandi</label>
+                            <input type="password" 
+                                   id="password-register" 
+                                   name="password" 
+                                   placeholder="kata sandi" 
+                                   class="w-full px-4 py-2 rounded-lg bg-gray-100 text-gray-900 focus:ring-2 focus:ring-[#B2C9AD] focus:outline-none">
+                            <x-input-error :messages="$errors->get('password')" class="mt-2  text-yellow-500" />
                         </div>
                         <div class="mb-6">
-                            <label for="password-confirmation" class="block text-sm mb-2">Konfirmasi Sandi</label>
-                            <input type="password" id="password-confirmation" name="password_confirmation" placeholder="konfirmasi kata sandi" class="w-full px-4 py-2 rounded-lg bg-gray-100 text-gray-900 focus:ring-2 focus:ring-[#B2C9AD] focus:outline-none">
+                            <label for="password-confirmation" :value="__('Confirm Password')" class="block text-sm mb-2">Konfirmasi Sandi</label>
+                            <input type="password" 
+                                   id="password-confirmation" 
+                                   name="password_confirmation" 
+                                   placeholder="konfirmasi kata sandi" 
+                                   class="w-full px-4 py-2 rounded-lg bg-gray-100 text-gray-900 focus:ring-2 focus:ring-[#B2C9AD] focus:outline-none">
+                            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2  text-yellow-500" />
                         </div>
                         <button type="submit" class="w-full bg-[#B2C9AD] hover:bg-white text-[#4B5945] py-2 rounded-lg">Lanjutkan</button>
                     </form>

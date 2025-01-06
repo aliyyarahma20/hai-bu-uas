@@ -25,8 +25,23 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        $credentials = $request->only('email', 'password');
 
+        // Periksa apakah email terdaftar
+        if (!\App\Models\User::where('email', $credentials['email'])->exists()) {
+            return back()->withErrors([
+                'email' => 'Email tidak terdaftar.',
+            ])->onlyInput('email');
+        }
+
+        // Coba autentikasi kredensial
+        if (!Auth::attempt($credentials)) {
+            return back()->withErrors([
+                'password' => 'Kata sandi yang Anda masukkan salah.',
+            ])->onlyInput('email'); // Simpan hanya input email untuk memudahkan pengguna
+        }
+
+        // Jika berhasil login
         $request->session()->regenerate();
 
         if (auth()->user()->hasRole('admin')) {
@@ -35,6 +50,8 @@ class AuthenticatedSessionController extends Controller
     
         return redirect()->route('user.dashboard');
     }
+
+
 
     /**
      * Destroy an authenticated session.

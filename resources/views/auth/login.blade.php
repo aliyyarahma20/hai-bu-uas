@@ -54,12 +54,20 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="mb-4">
-                            <label for="email" class="block text-sm mb-2">Email</label>
-                            <input type="email" id="email" name="email" placeholder="alamat email" class="w-full px-4 py-2 rounded-lg bg-gray-100 text-gray-900 focus:ring-2 focus:ring-[#B2C9AD] focus:outline-none">
+                            <label for="email" :value="__('Email')" class="block text-sm mb-2">Email</label>
+                            <input type="email" id="email" name="email" :value="old('email')" placeholder="alamat email" class="w-full px-4 py-2 rounded-lg bg-gray-100 text-gray-900 focus:ring-2 focus:ring-[#B2C9AD] focus:outline-none">
+                            <x-input-error :messages="$errors->get('email')" class="mt-2 text-yellow-500" />
                         </div>
                         <div class="mb-6">
                             <label for="password" class="block text-sm mb-2">Sandi</label>
                             <input type="password" id="password" name="password" placeholder="kata sandi" class="w-full px-4 py-2 rounded-lg bg-gray-100 text-gray-900 focus:ring-2 focus:ring-[#B2C9AD] focus:outline-none">
+                            <x-input-error :messages="$errors->get('password')" class="mt-2 text-yellow-500" />
+                        </div>
+                        <div class="block mb-6">
+                            <label for="remember_me" class="inline-flex items-center">
+                                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
+                                <span class="ms-2 text-sm text-white">{{ __('Remember me') }}</span>
+                            </label>
                         </div>
                         <button type="submit" class="w-full bg-[#B2C9AD] hover:bg-white text-[#4B5945] py-2 rounded-lg">Lanjutkan</button>
                     </form>
