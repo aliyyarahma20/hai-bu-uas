@@ -7,9 +7,11 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\StudentAnswerController;
+use App\Http\Controllers\UserProgressController;
+use App\Models\ModuleStudents;
 use GuzzleHttp\Middleware;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\KamusController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,50 +29,52 @@ Route::get('/', function () {
 })->name('landingpage');
 
 Route::get('/dashboard', function () {
-    $user = auth()->user();
+    $user = auth()->user(); 
     
     if ($user->hasRole('admin')) {
-        return redirect()->route('admin.dashboard');
-    } elseif ($user->hasRole('user')) {
+        return redirect()->route('dashboard.module-bahasa.index');
+    } elseif ($user->hasRole('student')) {
         return redirect()->route('user.dashboard');
     }
 
     return redirect('/'); // Default redirect jika role tidak terdefinisi
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Admin Dashboard
-Route::get('/admin/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'role:admin'])->name('admin.dashboard');
+
 
 // User Dashboard
 Route::get('/user/dashboard', function () {
-    return view('users.dashboard_user');
+    return view('users.dashboard');
 })->middleware(['auth', 'role:student'])->name('user.dashboard');
-
-Route::get('/dashboard', [LearningController::class, 'index'])->name('dashboard');
-Route::get('/kamus', [KamusController::class, 'index'])->name('kamus');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::get('/pilih-bahasa', [ModuleStudentController::class, 'index'])->name('pilih-bahasa');
+    Route::get('/pilih-bahasa', [ModuleStudentController::class, 'create'])->name('pilih.bahasa.create');
+    Route::post('/pilih-bahasa', [ModuleStudentController::class, 'store'])->name('pilih.bahasa.store');
+
     Route::prefix('dashboard')->name('dashboard.')->group(function (){
 
         Route::resource('module-bahasa',ModuleBahasaController::class)
         ->middleware('role:admin');
 
-        Route::get('/question/create/{modules}', [QuestionController::class, 'create'])
+        Route::get('/question/create/{moduleBahasa}', [QuestionController::class, 'create'])
         ->middleware('role:admin')
         ->name('module-bahasa.create.question');
 
-        Route::post('/quiz/question/save/{quiz}', [QuestionController::class, 'store'])
+        Route::post('/question/question/save/{moduleBahasa}', [QuestionController::class, 'store'])
         ->middleware('role:admin')
         ->name('module-bahasa.create.question.store');
 
         Route::resource('question', QuestionController::class)
         ->middleware('role:admin');
+
+        Route::resource('user', UserProgressController::class)
+        ->middleware('role:admin');
+    
 
         Route::get('/module-bahasa/students/show/{module-bahasa}', [ModuleStudentController::class, 'index'])
         ->middleware('role:admin')
@@ -78,11 +82,15 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/module-bahasa/students/create/{module-bahasa}', [ModuleStudentController::class, 'create'])
         ->middleware('role:admin')
-        ->name('module-bahasa.student.create');
+        ->name('module-bahasa.students.create');
 
         Route::post('/module-bahasa/students/save/{module-bahasa}', [ModuleStudentController::class, 'store'])
         ->middleware('role:admin')
-        ->name('module-bahasa.student.store');
+        ->name('module-bahasa.students.store');
+
+
+
+
 
         Route::get('/learning/finished/{module-bahasa}', [LearningController::class, 'learning_finished'])
         ->middleware('role:student')
