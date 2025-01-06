@@ -16,7 +16,6 @@ class RolePermissionSeeder extends Seeder
      */
     public function run(): void
     {
-
         $permissions = [
             'view modules',
             'create modules',
@@ -24,13 +23,14 @@ class RolePermissionSeeder extends Seeder
             'delete modules',
         ];
 
+        // Ubah create menjadi firstOrCreate untuk permissions
         foreach($permissions as $permission){
-            Permission::create([
-                'name' => $permission,
+            Permission::firstOrCreate([
+                'name' => $permission
             ]);
         }
 
-        $adminRole = Role::create([
+        $adminRole = Role::firstOrCreate([
             'name' => 'admin'
         ]);
 
@@ -41,7 +41,7 @@ class RolePermissionSeeder extends Seeder
             'delete modules'
         ]);
 
-        $studentRole = Role::create([
+        $studentRole = Role::firstOrCreate([
             'name' => 'student'
         ]);
 
@@ -49,13 +49,14 @@ class RolePermissionSeeder extends Seeder
             'view modules'
         ]);
 
-
-        // superadmin
-        $user = User::create([
-            'name' => 'Treece',
-            'email' => 'daughterofzain@gmail.com',
-            'password' => bcrypt('1223334444'),
-        ]);
+        // Ubah create menjadi firstOrCreate untuk user
+        $user = User::firstOrCreate(
+            ['email' => 'daughterofzain@gmail.com'],
+            [
+                'name' => 'Treece',
+                'password' => bcrypt('1223334444'),
+            ]
+        );
 
         $user->assignRole($adminRole);
     }
