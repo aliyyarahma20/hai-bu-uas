@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
     <body>
-     <!---Header-->
+    <!---Header-->
     <header class="text-slate-700 relative mx-auto flex flex-col overflow-hidden px-8 py-8 lg:flex-row lg:items-center bg-white  sticky  top-0 w-full z-50">
         <a href="#" class="flex items-center whitespace-nowrap text-2xl font-black">
             <span>

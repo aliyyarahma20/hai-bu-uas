@@ -13,7 +13,7 @@ class KamusController extends Controller
     public function index()
     {
         //
-        return 'pengelolaan kamus';
+        return view('users.dictionary.index');
     }
 
     /**

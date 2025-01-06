@@ -26,7 +26,7 @@
             <!-- Navigation Links -->
             <div class="flex-grow py-6">
                 <nav class="space-y-2">
-                    <a href="fix-dashboard.html" class="flex cursor-pointer items-center py-3 px-4 text-sm font-medium text-[#4B5945] hover:text-[#4B5945] hover:border-l-4 hover:border-l-[#4B5945]">
+                    <a href="{{ route('dashboard') }}" class="flex cursor-pointer items-center py-3 px-4 text-sm font-medium text-[#4B5945] hover:text-[#4B5945] hover:border-l-4 hover:border-l-[#4B5945]">
                         <svg class="mr-4 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                         </svg>
@@ -176,69 +176,54 @@
         </div>
     </div>
 
-    <!-- Main Content -->
-    <div class="p-6">
-        <div class="max-w-3xl mx-auto">
-            <h2 class="text-xl font-bold text-[#4B5945] mb-1">Pelajar Terbaik Minggu ini!</h2>
-            <p class="text-gray-600 text-sm mb-6">Mari pelajari lebih banyak lagi dan jadi bergabung bersama mereka!</p>
-
-            <div class="grid grid-cols-3 gap-4 mb-8">
-                <div class="bg-[#4B5945] rounded-xl overflow-hidden">
-                    <div class="px-4 py-2 flex items-center gap-2">
-                        <span class="font-bold text-white">1st</span>
-                        <img src="/api/placeholder/40/40" alt="Rama" class="w-10 h-10 rounded-full"/>
-                    </div>
-                    <div class="bg-white p-3">
-                        <h3 class="font-bold text-[#4B5945]">Rama Paramarta</h3>
-                        <p class="text-gray-600 text-sm">Poin: 1980</p>
-                    </div>
+    <div class="p-4">
+        <div class="flex flex-col sm:flex-row gap-2">
+        <!-- Kamus Card 1 -->
+        <div class="relative bg-[#4B5945] rounded-xl shadow-sm overflow-hidden h-32 w-80">
+            <div class="p-6">
+            <div class="flex items-start space-x-3">
+                <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                </svg>
                 </div>
-
-                <div class="bg-[#E8FFE8] rounded-xl overflow-hidden">
-                    <div class="px-4 py-2 flex items-center gap-2">
-                        <span class="font-bold text-[#4B5945]">2nd</span>
-                        <img src="/api/placeholder/40/40" alt="Puti" class="w-10 h-10 rounded-full"/>
-                    </div>
-                    <div class="bg-white p-3">
-                        <h3 class="font-bold text-[#4B5945]">Puti Andam</h3>
-                        <p class="text-gray-600 text-sm">Poin: 982</p>
-                    </div>
+                <div class="flex-1">
+                <h3 class="text-xl font-semibold text-white">Kamus Bahasa</h3>
+                <p class="text-white/80">Sunda - Indonesia</p>
                 </div>
-
-                <div class="bg-[#D1E9D1] rounded-xl overflow-hidden">
-                    <div class="px-4 py-2 flex items-center gap-2">
-                        <span class="font-bold text-[#4B5945]">3rd</span>
-                        <img src="/api/placeholder/40/40" alt="Sofea" class="w-10 h-10 rounded-full"/>
-                    </div>
-                    <div class="bg-white p-3">
-                        <h3 class="font-bold text-[#4B5945]">Sofea Maharani</h3>
-                        <p class="text-gray-600 text-sm">Poin: 890</p>
-                    </div>
+                <div class="ml-auto">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
                 </div>
             </div>
-
-            <div class="space-y-2">
-                <div class="flex items-center gap-3 bg-white rounded-xl p-3">
-                    <span class="text-gray-400 font-medium w-8">4th</span>
-                    <img src="/api/placeholder/32/32" alt="Verenada" class="w-8 h-8 rounded-full"/>
-                    <span class="text-[#4B5945]">Verenada Aray Mardifiliah</span>
-                </div>
-
-                <div class="flex items-center gap-3 bg-white rounded-xl p-3">
-                    <span class="text-gray-400 font-medium w-8">5th</span>
-                    <img src="/api/placeholder/32/32" alt="Nasywa" class="w-8 h-8 rounded-full"/>
-                    <span class="text-[#4B5945]">Nasywa Adita Zain</span>
-                </div>
-
-                <div class="flex items-center gap-3 bg-white rounded-xl p-3">
-                    <span class="text-gray-400 font-medium w-8">6th</span>
-                    <img src="/api/placeholder/32/32" alt="Atiyya" class="w-8 h-8 rounded-full"/>
-                    <span class="text-[#4B5945]">Aliyya Rahmawati Putri</span>
-                </div>
             </div>
         </div>
+
+        <!-- Kamus Card 2 -->
+        <div class="relative bg-[#E8F3E8] rounded-xl shadow-sm overflow-hidden h-32 w-80">
+            <div class="p-6">
+            <div class="flex items-start space-x-3">
+                <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#4B5945]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                </svg>
+                </div>
+                <div class="flex-1">
+                <h3 class="text-xl font-semibold text-[#4B5945]">Kamus Bahasa</h3>
+                <p class="text-[#4B5945]/80">Sunda - Indonesia</p>
+                </div>
+                <div class="ml-auto">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#4B5945]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
     </div>
-    
+
     <!-- SAVED -->
     <div id="rightOverlay" class="fixed inset-0 z-30 bg-gray-900 bg-opacity-50 transition-opacity hidden" onclick="closeRightSidebar()"></div>
     <!-- Right Sidebar -->

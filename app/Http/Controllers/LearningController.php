@@ -8,6 +8,6 @@ class LearningController extends Controller
 {
     //
     public function index(){
-        return 'Ayo mulai belajar bahasa daerah';
+        return view('users.dashboard_user');
     }
 }
