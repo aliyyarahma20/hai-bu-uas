@@ -52,6 +52,14 @@ class LoginRequest extends FormRequest
         RateLimiter::clear($this->throttleKey());
     }
 
+    public function messages()
+    {
+        return [
+            'email.required' => 'Email harus diisi.',
+            'password.required' => 'Password harus diisi.',
+        ];
+    }
+
     /**
      * Ensure the login request is not rate limited.
      *
