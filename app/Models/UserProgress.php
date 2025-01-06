@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use
 
 class UserProgress extends Model
 {
@@ -13,3 +14,4 @@ class UserProgress extends Model
         'id',
     ];
 }
+

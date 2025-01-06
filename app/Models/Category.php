@@ -13,4 +13,9 @@ class Category extends Model
     protected $guarded = [
         'id',
     ];
+
+    public function moduleBahasas()
+    {
+        return $this->hasMany(ModuleBahasa::class, 'categories_id');
+    }
 }

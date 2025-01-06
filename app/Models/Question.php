@@ -15,7 +15,7 @@ class Question extends Model
     ];
 
     public function modulebahasa(){
-        return $this->belongsTo(ModuleBahasa::class);
+        return $this->belongsTo(ModuleBahasa::class, 'module_bahasa_id');
     }
 
     public function answer(){

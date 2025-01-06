@@ -26,13 +26,14 @@
                     Platform yang menghubungkan Anda dengan keindahan <br> 
                     dan kekayaan bahasa daerah segera hadir!
                 </p>
+                <form action="{{route('logout')}}" method="POST">
+                 @csrf
                 <div class="mt-8 flex flex-wrap justify-center gap-4">
-                    <a
-                        class="block w-full rounded bg-[#4B5945] px-12 py-3 text-sm font-medium text-white shadow hover:bg-[#B2C9AD] hover:text-[#4B5945] active:bg-[#91AC8F] sm:w-auto"
-                        href="{{route('landingpage')}}">
+                    <button type="submit" class="block w-full rounded bg-[#4B5945] px-12 py-3 text-sm font-medium text-white shadow hover:bg-[#B2C9AD] hover:text-[#4B5945] active:bg-[#91AC8F] sm:w-auto">
                         Kembali
-                    </a>
+                    </button>
                 </div>
+              </form>
             </div>
         </div>
     </section>
