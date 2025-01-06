@@ -17,7 +17,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/dashboard';  // Default untuk user biasa
+    public const HOME = '/dashboard'; 
 
 
     /**

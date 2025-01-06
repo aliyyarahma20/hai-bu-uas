@@ -52,7 +52,7 @@
                 <div class="flex shrink-0 w-[170px] items-center justify-center">
                     <p class="p-[8px_16px] rounded-full bg-[#EAE8FE] font-bold text-sm text-[#6436F1]">{{$modul->category->name}}</p>
                 </div>
-             @elseif($modul->category->name == "Bahasa Melayu" or $modul->category->name == "Bahasa Madura")
+            @elseif($modul->category->name == "Bahasa Melayu" or $modul->category->name == "Bahasa Madura")
                 <div class="flex shrink-0 w-[170px] items-center justify-center">
                     <p class="p-[8px_16px] rounded-full bg-[#D5EFFE] font-bold text-sm text-[#066DFE]">{{$modul->category->name}}</p>
                 </div>

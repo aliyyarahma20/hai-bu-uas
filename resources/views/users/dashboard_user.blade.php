@@ -311,7 +311,7 @@
                             Leaderboard
                         </a>
     
-                        <a href="{{ route('kamus') }}" class="flex cursor-pointer items-center border-l-[#4B5945] py-3 px-4 text-sm font-medium text-gray-600 outline-none transition-all duration-100 ease-in-out hover:border-l-4 hover:border-l-[#4B5945] hover:text-[#4B5945]">
+                        <a href="#" class="flex cursor-pointer items-center border-l-[#4B5945] py-3 px-4 text-sm font-medium text-gray-600 outline-none transition-all duration-100 ease-in-out hover:border-l-4 hover:border-l-[#4B5945] hover:text-[#4B5945]">
                             <svg class="mr-4 h-5 w-5 align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v14a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2H6a2 2 0 00-2 2zM8 3v4l2-2 2 2V3" />
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 19a2 2 0 002 2h12a2 2 0 002-2" />

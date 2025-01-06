@@ -44,7 +44,7 @@ Route::get('/dashboard', function () {
 
 // User Dashboard
 Route::get('/user/dashboard', function () {
-    return view('users.dashboard');
+    return view('users.dashboard_user');
 })->middleware(['auth', 'role:student'])->name('user.dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -88,9 +88,8 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:admin')
         ->name('module-bahasa.students.store');
 
-
-
-
+        Route::get('/dashboard', [LearningController::class, 'index'])->name('dashboard');
+        Route::get('/kamus', [KamusController::class, 'index'])->name('kamus');
 
         Route::get('/learning/finished/{module-bahasa}', [LearningController::class, 'learning_finished'])
         ->middleware('role:student')
