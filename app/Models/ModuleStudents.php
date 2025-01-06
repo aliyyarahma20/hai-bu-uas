@@ -14,5 +14,23 @@ class ModuleStudents extends Model
         'id',
     ];
 
+    /**
+     * Relasi ke tabel User
+     * Setiap ModuleStudents berhubungan dengan satu User.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * Relasi ke tabel ModuleBahasa
+     * Setiap ModuleStudents berhubungan dengan satu ModuleBahasa.
+     */
+    public function moduleBahasa()
+    {
+        return $this->belongsTo(ModuleBahasa::class, 'module_bahasa_id');
+    }
+
    
 }

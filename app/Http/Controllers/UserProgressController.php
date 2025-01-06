@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\UserProgress;
 use Illuminate\Http\Request;
 
@@ -13,6 +14,12 @@ class UserProgressController extends Controller
     public function index()
     {
         //
+        $user = User::orderBy('id', 'DESC')->get();
+        
+
+        return view('admin.users.index', [
+            'user'=> $user
+        ]);
     }
 
     /**
