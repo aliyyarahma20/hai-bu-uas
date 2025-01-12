@@ -11,7 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-       
             Schema::table('users', function (Blueprint $table) {
                 $table->string('photos')->nullable()->after('streak'); // Menambah kolom 
                 $table->softDeletes(); // Menambah kolom
