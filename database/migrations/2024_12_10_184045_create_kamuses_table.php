@@ -13,11 +13,8 @@ return new class extends Migration
     {
         Schema::create('kamuses', function (Blueprint $table) {
             $table->id();
-            $table->string('kata');
-            $table->string('arti');
-            $table->string('jenis_kata');
-            $table->string('con_kalimat');
             $table->foreignId('categories_id')->constrained()->onDelete('cascade');
+            $table->string('link');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -6,7 +6,7 @@
 <div id="menu-content" class="flex flex-col w-full pb-[30px]">
     <div class="flex flex-col gap-10 px-5 mt-5">
         <div class="breadcrumb flex items-center gap-[30px]">
-            <a href="#" class="text-[#7F8190] last:text-[#0A090B] last:font-semibold">Beranda</a>
+            <a href="{{route('dashboard.module-bahasa.index')}}" class="text-[#7F8190] last:text-[#0A090B] last:font-semibold">Beranda</a>
             <span class="text-[#7F8190] last:text-[#0A090B]">/</span>
             <a href="{{route('dashboard.module-bahasa.index')}}" class="text-[#7F8190] last:text-[#0A090B] last:font-semibold">Modul Bahasa</a>
             <span class="text-[#7F8190] last:text-[#0A090B]">/</span>

@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\UserProgress;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
+use Str;
 
 class UserProgressController extends Controller
 {
@@ -49,24 +53,67 @@ class UserProgressController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(UserProgress $userProgress)
+    public function edit(User $user)
     {
         //
+        return view('admin.users.edit', [
+            'user' => $user,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, UserProgress $userProgress)
-    {
-        //
+    public function update(Request $request, User $user)
+{
+    $validated = $request->validate([
+        'name' => 'required|string|max:225',
+        'email' => 'required|string|email',
+        'password' => 'nullable|string|min:8',
+        'photos' => 'sometimes|image|mimes:jpeg,png,jpg,gif',
+    ]);
+
+    DB::beginTransaction();
+    try {
+        if ($request->hasFile('photos')) {
+            $coverPath = $request->file('photos')->store('produc_photos', 'public');
+            $validated['photos'] = $coverPath;
+        }
+
+        if ($request->filled('password')) {
+            $validated['password'] = Hash::make($request->password);
+        }
+
+        $user->update($validated);
+
+        DB::commit();
+        return redirect()->route('dashboard.user.index');
+    } catch (\Exception $e) {
+        DB::rollBack();
+        $error = ValidationException::withMessages([
+            'system_error' => ['System error!', $e->getMessage()],
+        ]);
+        throw $error;
     }
+}
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(UserProgress $userProgress)
+    public function destroy(User $user)
     {
         //
+        try{
+            $user->delete();
+            return redirect()->route('dashboard.user.index')->with('success', 'Pengguna berhasil dihapus.');
+        }
+        catch (\Exception $e){
+            DB::rollBack();
+            $error = ValidationException::withMessages([
+                'system_error' => ['System error!', $e->getMessage()],
+            ]);
+            throw $error;
+        }  
     }
 }

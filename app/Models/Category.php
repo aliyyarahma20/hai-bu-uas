@@ -18,4 +18,6 @@ class Category extends Model
     {
         return $this->hasMany(ModuleBahasa::class, 'categories_id');
     }
+
+
 }

@@ -7,11 +7,11 @@
     {{-- Content --}}
     <div class="flex flex-col gap-10 px-5 mt-5">
         <div class="breadcrumb flex items-center gap-[30px]">
-            <a href="#" class="text-[#7F8190] last:text-[#0A090B] last:font-semibold">Beranda</a>
+            <a href="{{ route('dashboard.module-bahasa.index')}}" class="text-[#7F8190] last:text-[#0A090B] last:font-semibold">Beranda</a>
             <span class="text-[#7F8190] last:text-[#0A090B]">/</span>
             <a href="{{route('dashboard.module-bahasa.index')}}" class="text-[#7F8190] last:text-[#0A090B] last:font-semibold">Modul Bahasa</a>
             <span class="text-[#7F8190] last:text-[#0A090B]">/</span>
-            <a href="#" class="text-[#7F8190] last:text-[#0A090B] last:font-semibold ">Modul Baru</a>
+            <a href="{{ route('dashboard.module-bahasa.create')}}" class="text-[#7F8190] last:text-[#0A090B] last:font-semibold ">Modul Baru</a>
         </div>
     </div>
     <div class="header flex flex-col gap-1 px-5 mt-5">
@@ -87,3 +87,44 @@
 </div>
 
 @endsection
+
+<script>
+    function previewFile() {
+        var preview = document.querySelector('.file-preview');
+        var fileInput = document.querySelector('input[type=file]');
+
+        if (fileInput.files.length > 0) {
+            var reader = new FileReader();
+            var file = fileInput.files[0]; // Get the first file from the input
+
+            reader.onloadend = function () {
+                var img = preview.querySelector('.thumbnail-icon'); // Get the thumbnail image element
+                img.src = reader.result; // Update src attribute with the uploaded file
+                preview.classList.remove('hidden'); // Remove the 'hidden' class to display the preview
+            }
+
+            reader.readAsDataURL(file);
+            fileInput.setAttribute('data-empty', 'false');
+        } else {
+            preview.classList.add('hidden'); // Hide preview if no file selected
+            fileInput.setAttribute('data-empty', 'true');
+        }
+    }
+</script>
+
+<script>
+    function handleActiveAnchor(element) {
+        event.preventDefault();
+
+        const group = element.getAttribute('data-group');
+        
+        // Reset all elements' aria-checked to "false" within the same data-group
+        const allElements = document.querySelectorAll(`[data-group="${group}"][aria-checked="true"]`);
+        allElements.forEach(el => {
+            el.setAttribute('aria-checked', 'false');
+        });
+        
+        // Set the clicked element's aria-checked to "true"
+        element.setAttribute('aria-checked', 'true');
+    }
+</script>

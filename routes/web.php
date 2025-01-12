@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\KamusController;
 use App\Http\Controllers\LearningController;
 use App\Http\Controllers\ModuleBahasaController;
 use App\Http\Controllers\ModuleStudentController;
@@ -29,6 +30,8 @@ Route::get('/', function () {
 })->name('landingpage');
 
 Route::get('/dashboard', function () {
+
+    /** @var \App\Models\User */
     $user = auth()->user(); 
     
     if ($user->hasRole('admin')) {
@@ -58,9 +61,11 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('dashboard')->name('dashboard.')->group(function (){
 
+        // Route untuk CRUD module bahasa
         Route::resource('module-bahasa',ModuleBahasaController::class)
         ->middleware('role:admin');
 
+        // Route untuk CRUD kuis
         Route::get('/question/create/{moduleBahasa}', [QuestionController::class, 'create'])
         ->middleware('role:admin')
         ->name('module-bahasa.create.question');
@@ -72,7 +77,12 @@ Route::middleware('auth')->group(function () {
         Route::resource('question', QuestionController::class)
         ->middleware('role:admin');
 
+        // Route untuk data pengguna
         Route::resource('user', UserProgressController::class)
+        ->middleware('role:admin');
+
+        // Route data kamus
+        Route::resource('kamus', KamusController::class)
         ->middleware('role:admin');
     
 
@@ -89,7 +99,7 @@ Route::middleware('auth')->group(function () {
         ->name('module-bahasa.students.store');
 
         Route::get('/dashboard', [LearningController::class, 'index'])->name('dashboard');
-        Route::get('/kamus', [KamusController::class, 'index'])->name('kamus');
+      
 
         Route::get('/learning/finished/{module-bahasa}', [LearningController::class, 'learning_finished'])
         ->middleware('role:student')
