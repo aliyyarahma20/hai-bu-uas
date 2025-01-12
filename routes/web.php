@@ -112,6 +112,10 @@ Route::middleware('auth')->group(function () {
         ->name('learning.module-bahasa.answer.store');
 
     });
+
+    Route::get('/bookmarks', [BookmarkController::class, 'index'])->name('bookmarks.index');
+    Route::post('/bookmarks', [BookmarkController::class, 'store'])->name('bookmarks.store');
+    Route::delete('/bookmarks/{bookmark}', [BookmarkController::class, 'destroy'])->name('bookmarks.destroy');
 });
 
 require __DIR__.'/auth.php';

@@ -53,4 +53,9 @@ class User extends Authenticatable
     public function userprogess(){
         return $this->belongsToMany(ModuleBahasa::class, 'user_progress', 'user_id', 'module_bahasa_id');
     }
+
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
+    }
 }
