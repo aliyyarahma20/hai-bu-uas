@@ -68,4 +68,9 @@ class Kernel extends HttpKernel
         'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
     ];
+
+    protected $routeMiddleware = [
+        // Middleware lain...
+        'record.activity' => \App\Http\Middleware\RecordActivity::class,
+    ];
 }
