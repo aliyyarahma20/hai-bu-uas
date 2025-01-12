@@ -12,7 +12,7 @@ use Carbon\Carbon;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory, Notifiable, HasRoles, SoftDeletes;
 
 
     /**
@@ -24,7 +24,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'streak'
+        'streak',
+        'photos'
     ];
 
     /**
@@ -86,5 +87,10 @@ class User extends Authenticatable
         }
 
         return $streak;
+    }
+
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
     }
 }
