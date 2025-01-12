@@ -12,6 +12,7 @@ use App\Models\ModuleStudents;
 use GuzzleHttp\Middleware;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserActivityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,6 +56,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/pilih-bahasa', [ModuleStudentController::class, 'index'])->name('pilih-bahasa');
     Route::get('/pilih-bahasa', [ModuleStudentController::class, 'create'])->name('pilih.bahasa.create');
     Route::post('/pilih-bahasa', [ModuleStudentController::class, 'store'])->name('pilih.bahasa.store');
+
+    Route::middleware(['auth'])->group(function () {
+        // Route untuk halaman utama streak
+        Route::get('/streaks', function () {
+            return view('streaks.index');
+        })->name('streaks.index');
+    
+        // API untuk mendapatkan data streak dan aktivitas
+        Route::get('/get-streak-data', [UserActivityController::class, 'getStreak'])->name('streak.data');
+        
+        // API untuk mencatat kunjungan
+        Route::post('/track-visit', [UserActivityController::class, 'track'])->name('streak.track');
+    });
 
     Route::prefix('dashboard')->name('dashboard.')->group(function (){
 

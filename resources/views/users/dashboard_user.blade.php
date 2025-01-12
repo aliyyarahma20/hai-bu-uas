@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        @vite(['resources/js/app.js', 'resources/css/app.css'])
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://cdn.tailwindcss.com"></script>
@@ -84,109 +85,132 @@
         window.closeSidebar = sidebar.close;
         window.toggleDropdown = dropdowns.toggle;
 
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        }
+
+        // Close sidebar when screen size becomes large
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) { // 1024px is the lg breakpoint
+                closeSidebar();
+            }
+        });
+
         </script>
         <script type="text/babel">
-            const LearningCalendar = () => {
-                const [currentDate] = React.useState(new Date());
-                const [currentMonth, setCurrentMonth] = React.useState(new Date());
+            // const LearningCalendar = () => {
+            //     const [currentDate] = React.useState(new Date());
+            //     const [currentMonth, setCurrentMonth] = React.useState(new Date());
 
-                const streakDays = {
-                    active: [new Date().toDateString()],
-                    secondary: [
-                        new Date(new Date().setDate(new Date().getDate() - 1)).toDateString(),
-                        new Date(new Date().setDate(new Date().getDate() - 2)).toDateString(),
-                    ]
-                };
+            //     const streakDays = {
+            //         active: [new Date().toDateString()],
+            //         secondary: [
+            //             new Date(new Date().setDate(new Date().getDate() - 1)).toDateString(),
+            //             new Date(new Date().setDate(new Date().getDate() - 2)).toDateString(),
+            //         ]
+            //     };
 
-                const getDaysInMonth = (date) => {
-                    const year = date.getFullYear();
-                    const month = date.getMonth();
-                    const daysInMonth = new Date(year, month + 1, 0).getDate();
-                    const firstDayOfMonth = new Date(year, month, 1).getDay();
-                    return { daysInMonth, firstDayOfMonth };
-                };
+            //     const getDaysInMonth = (date) => {
+            //         const year = date.getFullYear();
+            //         const month = date.getMonth();
+            //         const daysInMonth = new Date(year, month + 1, 0).getDate();
+            //         const firstDayOfMonth = new Date(year, month, 1).getDay();
+            //         return { daysInMonth, firstDayOfMonth };
+            //     };
 
-                const formatMonth = (date) => {
-                    return date.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
-                };
+            //     const formatMonth = (date) => {
+            //         return date.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
+            //     };
 
-                const handlePrevMonth = () => {
-                    setCurrentMonth(new Date(currentMonth.setMonth(currentMonth.getMonth() - 1)));
-                };
+            //     const handlePrevMonth = () => {
+            //         setCurrentMonth(new Date(currentMonth.setMonth(currentMonth.getMonth() - 1)));
+            //     };
 
-                const handleNextMonth = () => {
-                    setCurrentMonth(new Date(currentMonth.setMonth(currentMonth.getMonth() + 1)));
-                };
+            //     const handleNextMonth = () => {
+            //         setCurrentMonth(new Date(currentMonth.setMonth(currentMonth.getMonth() + 1)));
+            //     };
 
-                const renderCalendar = () => {
-                    const { daysInMonth, firstDayOfMonth } = getDaysInMonth(currentMonth);
-                    const days = [];
+            //     const renderCalendar = () => {
+            //         const { daysInMonth, firstDayOfMonth } = getDaysInMonth(currentMonth);
+            //         const days = [];
                     
-                    const weekdays = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
-                    weekdays.forEach(day => {
-                        days.push(
-                            React.createElement('div', {
-                                key: `header-${day}`,
-                                className: "calendar-day text-sm font-medium text-gray-600"
-                            }, day)
-                        );
-                    });
+            //         const weekdays = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+            //         weekdays.forEach(day => {
+            //             days.push(
+            //                 React.createElement('div', {
+            //                     key: `header-${day}`,
+            //                     className: "calendar-day text-sm font-medium text-gray-600"
+            //                 }, day)
+            //             );
+            //         });
 
-                    for (let i = 0; i < firstDayOfMonth; i++) {
-                        days.push(React.createElement('div', { key: `empty-${i}`, className: "calendar-day" }));
-                    }
+            //         for (let i = 0; i < firstDayOfMonth; i++) {
+            //             days.push(React.createElement('div', { key: `empty-${i}`, className: "calendar-day" }));
+            //         }
 
-                    for (let day = 1; day <= daysInMonth; day++) {
-                        const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
-                        const dateString = date.toDateString();
+            //         for (let day = 1; day <= daysInMonth; day++) {
+            //             const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
+            //             const dateString = date.toDateString();
                         
-                        let className = "calendar-day hover:bg-gray-100 cursor-pointer";
-                        if (streakDays.active.includes(dateString)) {
-                            className += " active";
-                        } else if (streakDays.secondary.includes(dateString)) {
-                            className += " secondary";
-                        }
+            //             let className = "calendar-day hover:bg-gray-100 cursor-pointer";
+            //             if (streakDays.active.includes(dateString)) {
+            //                 className += " active";
+            //             } else if (streakDays.secondary.includes(dateString)) {
+            //                 className += " secondary";
+            //             }
 
-                        days.push(
-                            React.createElement('div', {
-                                key: `day-${day}`,
-                                className: className
-                            }, day)
-                        );
-                    }
+            //             days.push(
+            //                 React.createElement('div', {
+            //                     key: `day-${day}`,
+            //                     className: className
+            //                 }, day)
+            //             );
+            //         }
 
-                    return days;
-                };
+            //         return days;
+            //     };
 
-                return React.createElement('div', { className: "bg-[#4B5945] rounded-xl p-6" },
-                    React.createElement('h3', { className: "text-white font-semibold mb-4" }, "Progress Belajar mu-1"),
-                    React.createElement('div', { className: "bg-white rounded-lg p-4" },
-                        React.createElement('div', { className: "flex justify-between items-center mb-4" },
-                            React.createElement('button', {
-                                onClick: handlePrevMonth,
-                                className: "text-[#4B5945] hover:bg-gray-100 p-1 rounded"
-                            }, "←"),
-                            React.createElement('span', { className: "text-[#4B5945] font-medium" },
-                                formatMonth(currentMonth)
-                            ),
-                            React.createElement('button', {
-                                onClick: handleNextMonth,
-                                className: "text-[#4B5945] hover:bg-gray-100 p-1 rounded"
-                            }, "→")
-                        ),
-                        React.createElement('div', { className: "grid grid-cols-7 gap-2" },
-                            renderCalendar()
-                        )
-                    )
-                );
-            };
+            //     return React.createElement('div', { className: "bg-[#4B5945] rounded-xl p-6" },
+            //         React.createElement('h3', { className: "text-white font-semibold mb-4" }, "Progress Belajar mu-1"),
+            //         React.createElement('div', { className: "bg-white rounded-lg p-4" },
+            //             React.createElement('div', { className: "flex justify-between items-center mb-4" },
+            //                 React.createElement('button', {
+            //                     onClick: handlePrevMonth,
+            //                     className: "text-[#4B5945] hover:bg-gray-100 p-1 rounded"
+            //                 }, "←"),
+            //                 React.createElement('span', { className: "text-[#4B5945] font-medium" },
+            //                     formatMonth(currentMonth)
+            //                 ),
+            //                 React.createElement('button', {
+            //                     onClick: handleNextMonth,
+            //                     className: "text-[#4B5945] hover:bg-gray-100 p-1 rounded"
+            //                 }, "→")
+            //             ),
+            //             React.createElement('div', { className: "grid grid-cols-7 gap-2" },
+            //                 renderCalendar()
+            //             )
+            //         )
+            //     );
+            // };
 
-            window.addEventListener('load', function() {
+            // Tunggu semua resource loaded
+            window.onload = function() {
                 const calendarContainer = document.getElementById('calendar-container');
                 if (calendarContainer) {
-                    ReactDOM.render(React.createElement(LearningCalendar), calendarContainer);
+                    const root = ReactDOM.createRoot(calendarContainer);
+                    root.render(React.createElement(LearningCalendar));
                 }
-            });
+            };
 
                  // Add these new functions
                 const rightSidebar = {
@@ -229,6 +253,11 @@
 
         </script>
         <style>
+                @media (min-width: 1024px) {
+                .main-content {
+                    margin-left: 16rem; /* 256px / 16 = 16rem */
+                }
+            }
             .module-card {
                 transition: all 0.3s ease;
                 position: relative;
@@ -255,7 +284,7 @@
                 border-radius: 2px;
             }
             
-            .calendar-day {
+            /* .calendar-day {
                 width: 32px;
                 height: 32px;
                 display: flex;
@@ -272,20 +301,22 @@
             .calendar-day.secondary {
                 background-color: #66785F;
                 color: white;
-            }
+            } */
         </style>
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="bg-[#FAF2EA]">
-        <!-- Overlay for sidebar -->
-        <div id="overlay" class="fixed inset-0 z-30 bg-gray-900 bg-opacity-50 transition-opacity hidden" onclick="closeSidebar()"></div>
-    
-        <!-- Sidebar -->
-        <div id="sidebar" class="fixed left-0 top-0 z-40 h-screen w-64 transform bg-white shadow-lg transition-transform duration-300 ease-in-out -translate-x-full">
-            <div class="flex h-full flex-col">
-                <!-- Logo Section -->
-                <div class="flex justify-center items-center py-8 border-b">
-                    <img class="h-16 w-auto" src="{{asset('image/hai-bu.png')}}" alt="hai-bu logo" />
-                </div>
+            <!-- Overlay - only visible on mobile when sidebar is open -->
+            <div id="overlay" class="lg:hidden fixed inset-0 z-30 bg-gray-900 bg-opacity-50 transition-opacity hidden" onclick="closeSidebar()"></div>
+
+            <!-- Sidebar - fixed on desktop, slideable on mobile -->
+            <div id="sidebar" class="fixed left-0 top-0 z-40 h-screen w-64 bg-white shadow-lg transition-transform duration-300 ease-in-out lg:translate-x-0 -translate-x-full">
+                <!-- Sidebar content remains the same -->
+                <div class="flex h-full flex-col">
+                    <!-- Logo Section -->
+                    <div class="flex justify-center items-center py-8 border-b">
+                        <img class="h-16 w-auto" src="{{asset('image/hai-bu.png')}}" alt="hai-bu logo" />
+                    </div>
     
                 <!-- Navigation Links -->
                 <div class="flex-grow py-6">
@@ -343,243 +374,230 @@
             </div>
         </div>
     
-        <!-- Main Content -->
-        <div class="p-4">
-            <!-- Top Navigation Bar -->
-            <div class="flex items-center gap-4">
-                <button onclick="toggleSidebar()" class="p-2 hover:text-white hover:bg-[#D1E9D1] text-[#4B5945] rounded-lg focus:ring-2 focus:ring-[#4B5945] focus:text-white focus:bg-[#4B5945]">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                </button>
-                
-                <div class="relative flex-1">
-                    <input type="text" 
-                        id="searchInput"
-                        placeholder="Apa yang kamu cari?" 
-                        class="w-full rounded-full bg-white px-4 py-2 shadow-sm 
-                                border border-gray-200
-                                placeholder-gray-400
-                                focus:outline-none focus:ring-2 focus:ring-[#4B5945] focus:border-transparent
-                                transition-all duration-200"/>
-                    <button id="searchButton" 
-                            class="absolute right-3 top-1/2 -translate-y-1/2 
-                                p-1 rounded-full
-                                hover:bg-[#D1E9D1] 
-                                transition-all duration-200 opacity-100">
-                        <svg xmlns="http://www.w3.org/2000/svg" 
-                            class="h-5 w-5 text-gray-400 hover:text-[#4B5945]" 
-                            fill="none" 
-                            viewBox="0 0 24 24" 
-                            stroke="currentColor">
-                            <path stroke-linecap="round" 
-                                stroke-linejoin="round" 
-                                stroke-width="2" 
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                    </button>
-                </div>
-    
-                <!-- Notification Button -->
-                <div class="relative">
-                    <button id="notificationButton" onclick="toggleDropdown('notificationDropdown')" 
-                            class="p-2 text-[#4B5945] hover:text-white hover:bg-[#D1E9D1] rounded-lg focus:ring-2 focus:ring-[#4B5945] focus:text-white focus:bg-[#4B5945]">
+        <div class="lg:pl-64">     
+            <!-- Main Content -->
+            <div class="p-4">
+                <div class="flex items-center gap-4">
+                    <!-- Tombol hamburger hanya muncul di mobile (< lg) -->
+                    <button onclick="toggleSidebar()" class="block lg:hidden p-2 hover:text-white hover:bg-[#D1E9D1] text-[#4B5945] rounded-lg focus:ring-2 focus:ring-[#4B5945] focus:text-white focus:bg-[#4B5945]">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
-    
-                    <!-- Notification Dropdown -->
-                    <div id="notificationDropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg z-50">
-                        <div class="p-4">
-                            <h3 class="text-lg font-semibold mb-2">Notifikasi</h3>
-                            <div class="border-t pt-2">
-                                <div class="text-sm text-gray-600 py-2">Belum ada notifikasi baru</div>
+                    
+                    <!-- Search bar -->
+                    <div class="relative flex-1">
+                        <input type="text" 
+                            id="searchInput"
+                            placeholder="Apa yang kamu cari?" 
+                            class="w-full rounded-full bg-white px-4 py-2 shadow-sm 
+                                    border border-gray-200
+                                    placeholder-gray-400
+                                    focus:outline-none focus:ring-2 focus:ring-[#4B5945] focus:border-transparent
+                                    transition-all duration-200"/>
+                        <button id="searchButton" 
+                                class="absolute right-3 top-1/2 -translate-y-1/2 
+                                    p-1 rounded-full
+                                    hover:bg-[#D1E9D1] 
+                                    transition-all duration-200 opacity-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" 
+                                class="h-5 w-5 text-gray-400 hover:text-[#4B5945]" 
+                                fill="none" 
+                                viewBox="0 0 24 24" 
+                                stroke="currentColor">
+                                <path stroke-linecap="round" 
+                                    stroke-linejoin="round" 
+                                    stroke-width="2" 
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </button>
+                    </div>
+        
+                    <!-- Notification Button -->
+                    <div class="relative">
+                        <button id="notificationButton" onclick="toggleDropdown('notificationDropdown')" 
+                                class="p-2 text-[#4B5945] hover:text-white hover:bg-[#D1E9D1] rounded-lg focus:ring-2 focus:ring-[#4B5945] focus:text-white focus:bg-[#4B5945]">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                            </svg>
+                        </button>
+        
+                        <!-- Notification Dropdown -->
+                        <div id="notificationDropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg z-50">
+                            <div class="p-4">
+                                <h3 class="text-lg font-semibold mb-2">Notifikasi</h3>
+                                <div class="border-t pt-2">
+                                    <div class="text-sm text-gray-600 py-2">Belum ada notifikasi baru</div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-    
-                <!-- Profile Button -->
-                <div class="relative">
-                    <button id="profileButton" onclick="toggleDropdown('profileDropdown')" 
-                            class="h-10 w-10 overflow-hidden rounded-full focus:outline-none focus:ring-2 focus:ring-[#4B5945] focus:ring-offset-2 transition-all duration-200">
-                        <img src="./image/jiwon.jpeg" alt="Profile" class="h-full w-full object-cover"/>
-                    </button>
-    
-                    <!-- Profile Dropdown -->
-                    <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg z-50">
-                        <div class="p-6">
-                            <div class="flex flex-col items-center gap-4">
-                                <img src="./image/jiwon.jpeg" alt="Profile" class="w-24 h-24 rounded-full object-cover" />
-                                <div class="space-y-4 w-full">
-                                    <div class="space-y-2">
-                                        <label class="text-sm text-gray-600">Nama</label>
-                                        <input type="text" class="w-full p-2 border rounded-lg" value="{{Auth::user()->name}}" />
+        
+                    <!-- Profile Button -->
+                    <div class="relative">
+                        <button id="profileButton" onclick="toggleDropdown('profileDropdown')" 
+                                class="h-10 w-10 overflow-hidden rounded-full focus:outline-none focus:ring-2 focus:ring-[#4B5945] focus:ring-offset-2 transition-all duration-200">
+                            <img src="./image/jiwon.jpeg" alt="Profile" class="h-full w-full object-cover"/>
+                        </button>
+        
+                        <!-- Profile Dropdown -->
+                        <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg z-50">
+                            <div class="p-6">
+                                <div class="flex flex-col items-center gap-4">
+                                    <img src="./image/jiwon.jpeg" alt="Profile" class="w-24 h-24 rounded-full object-cover" />
+                                    <div class="space-y-4 w-full">
+                                        <div class="space-y-2">
+                                            <label class="text-sm text-gray-600">Nama</label>
+                                            <input type="text" class="w-full p-2 border rounded-lg" value="{{Auth::user()->name}}" />
+                                        </div>
+                                        <div class="space-y-2">
+                                            <label class="text-sm text-gray-600">Email</label>
+                                            <input type="email" class="w-full p-2 border rounded-lg" value="{{ Auth::user()->email}}" />
+                                        </div>
+                                        <div class="space-y-2">
+                                            <label class="text-sm text-gray-600">Kata Sandi</label>
+                                            <input type="password" class="w-full p-2 border rounded-lg" />
+                                        </div>
+                                        <div class="space-y-2">
+                                            <label class="text-sm text-gray-600">Konfirmasi Kata Sandi</label>
+                                            <input type="password" class="w-full p-2 border rounded-lg" />
+                                        </div>
+                                        <button class="w-full py-2 bg-[#4B5945] text-white rounded-lg hover:bg-opacity-90">
+                                            Simpan
+                                        </button>
                                     </div>
-                                    <div class="space-y-2">
-                                        <label class="text-sm text-gray-600">Email</label>
-                                        <input type="email" class="w-full p-2 border rounded-lg" value="{{ Auth::user()->email}}" />
-                                    </div>
-                                    <div class="space-y-2">
-                                        <label class="text-sm text-gray-600">Kata Sandi</label>
-                                        <input type="password" class="w-full p-2 border rounded-lg" />
-                                    </div>
-                                    <div class="space-y-2">
-                                        <label class="text-sm text-gray-600">Konfirmasi Kata Sandi</label>
-                                        <input type="password" class="w-full p-2 border rounded-lg" />
-                                    </div>
-                                    <button class="w-full py-2 bg-[#4B5945] text-white rounded-lg hover:bg-opacity-90">
-                                        Simpan
-                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        
 
-            <!-- Main Content -->
-            <div class="p-6">
-                <div class="flex justify-between items-start mb-8">
-                    <h1 class="text-2xl font-bold text-[#4B5945]">Ruang hai-bu</h1>
-                    <h2 class="text-xl font-bold text-[#4B5945]">Mulai Perjalanan Belajarmu<br/>Bersama Hai-Bu!</h2>
-                </div>
-
-                <!-- Modules Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                    <div class="module-card bg-[#4B5945] rounded-xl p-6">
-                        <h3 class="text-white font-semibold">Modul 1:</h3>
-                        <p class="text-white mb-4">Tingaktan Bahasa</p>
-                        <div class="progress-bar" style="width: 70%"></div>
+                <!-- Main Content -->
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-8">
+                        <h1 class="text-2xl font-bold text-[#4B5945]">Ruang hai-bu</h1>
+                        <h2 class="text-xl font-bold text-[#4B5945]">Mulai Perjalanan Belajarmu<br/>Bersama Hai-Bu!</h2>
                     </div>
 
-                    <div class="module-card bg-[#66785F] rounded-xl p-6">
-                        <h3 class="text-white font-semibold">Modul 2:</h3>
-                        <p class="text-white mb-4">Percakapan Sehari-hari</p>
-                        <div class="progress-bar" style="width: 85%"></div>
-                    </div>
+                    <!-- Modules Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                        <div class="module-card bg-[#4B5945] rounded-xl p-6">
+                            <h3 class="text-white font-semibold">Modul 1:</h3>
+                            <p class="text-white mb-4">Tingaktan Bahasa</p>
+                            <div class="progress-bar" style="width: 70%"></div>
+                        </div>
 
-                    <div class="module-card bg-[#B2C9AD] rounded-xl p-6">
-                        <h3 class="text-white font-semibold">Modul 3:</h3>
-                        <p class="text-white mb-4">Kata Kerja</p>
-                        <div class="progress-bar" style="width: 35%"></div>
-                    </div>
-                </div>
+                        <div class="module-card bg-[#66785F] rounded-xl p-6">
+                            <h3 class="text-white font-semibold">Modul 2:</h3>
+                            <p class="text-white mb-4">Percakapan Sehari-hari</p>
+                            <div class="progress-bar" style="width: 85%"></div>
+                        </div>
 
-                <!-- Quiz Section -->
-                <div class="bg-white rounded-xl p-6 mb-8 flex justify-between items-center">
-                    <div>
-                        <h3 class="text-[#4B5945] font-semibold mb-2">Bahasa dengan jumlah penutur terbesar di Indonesia,<br/>dengan lebih dari 80 juta penutur</h3>
-                    </div>
-                    <img src="/api/placeholder/150/150" alt="Quiz illustration" class="h-24 w-auto"/>
-                </div>
-
-                <!-- Dictionary Section -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                    <div class="bg-[#B2C9AD] rounded-xl p-6">
-                        <h3 class="text-white font-semibold mb-4">Kamus Bahasa<br/>Sunda - Indonesia</h3>
-                        <button class="text-white">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                            </svg>
-                        </button>
-                    </div>
-
-                    <div class="bg-[#4B5945] rounded-xl p-6">
-                        <h3 class="text-white font-semibold mb-4">Kamus Bahasa<br/>Indonesia - Sunda</h3>
-                        <button class="text-white">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-
-                <div id="calendar-container">
-                    <!-- Progress Calendar -->
-                    <div class="bg-[#4B5945] rounded-xl p-6">
-                        <h3 class="text-white font-semibold mb-4">Progress Belajarmu</h3>
-                        <div class="bg-white rounded-lg p-4">
-                            <div class="flex justify-between items-center mb-4">
-                                <button class="text-[#4B5945]">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                    </svg>
-                                </button>
-                                <button class="text-[#4B5945]">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                                    </svg>
-                                </button>
-                            </div>
+                        <div class="module-card bg-[#B2C9AD] rounded-xl p-6">
+                            <h3 class="text-white font-semibold">Modul 3:</h3>
+                            <p class="text-white mb-4">Kata Kerja</p>
+                            <div class="progress-bar" style="width: 35%"></div>
                         </div>
                     </div>
-                </div>
-                <!-- Leaderboard -->
-                <div class="mt-8">
-                    <h3 class="text-[#4B5945] font-semibold mb-4">Pelajar Terbaik Minggu ini</h3>
-                    <div class="space-y-3">
-                        <div class="bg-[#B2C9AD] rounded-xl p-4 flex justify-between items-center">
-                            <div class="flex items-center gap-3">
-                                <img src="/api/placeholder/40/40" alt="Profile" class="w-10 h-10 rounded-full"/>
-                                <span class="text-[#4B5945] font-medium">Rama Paramarta</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <span class="text-[#4B5945]">Poin: 1980</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="bg-[#F3F8F2] rounded-xl p-4 flex justify-between items-center">
-                            <div class="flex items-center gap-3">
-                                <img src="/api/placeholder/40/40" alt="Profile" class="w-10 h-10 rounded-full"/>
-                                <span class="text-[#4B5945] font-medium">Puti Andam</span>
-                            </div>
-                            <span class="text-[#4B5945]">Poin: 982</span>
-                        </div>
-                        <div class="bg-[#F3F8F2] rounded-xl p-4 flex justify-between items-center">
-                            <div class="flex items-center gap-3">
-                                <img src="/api/placeholder/40/40" alt="Profile" class="w-10 h-10 rounded-full"/>
-                                <span class="text-[#4B5945] font-medium">Sofea Maharani</span>
-                            </div>
-                            <span class="text-[#4B5945]">Poin: 890</span>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- SAVED -->
-                <div id="rightOverlay" class="fixed inset-0 z-30 bg-gray-900 bg-opacity-50 transition-opacity hidden" onclick="closeRightSidebar()"></div>
-                <!-- Right Sidebar -->
-                <div id="rightSidebar" class="fixed right-0 top-0 z-40 h-screen w-80 transform bg-white shadow-lg transition-transform duration-300 ease-in-out translate-x-full">
-                    <div class="flex h-full flex-col">
-                        <!-- Header Section -->
-                        <div class="flex items-center justify-between border-b px-6 py-4">
-                            <h2 class="text-xl font-semibold text-[#4B5945]">Tersimpan</h2>
-                            <button onclick="closeRightSidebar()" class="p-2 hover:bg-[#D1E9D1] rounded-lg">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#4B5945]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    <!-- Quiz Section -->
+                    <div class="bg-white rounded-xl p-6 mb-8 flex justify-between items-center">
+                        <div>
+                            <h3 class="text-[#4B5945] font-semibold mb-2">Bahasa dengan jumlah penutur terbesar di Indonesia,<br/>dengan lebih dari 80 juta penutur</h3>
+                        </div>
+                        <img src="/api/placeholder/150/150" alt="Quiz illustration" class="h-24 w-auto"/>
+                    </div>
+
+                    <!-- Dictionary Section -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                        <div class="bg-[#B2C9AD] rounded-xl p-6">
+                            <h3 class="text-white font-semibold mb-4">Kamus Bahasa<br/>Sunda - Indonesia</h3>
+                            <button class="text-white">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                 </svg>
                             </button>
                         </div>
-                        <!-- Saved Items Container -->
-                        <div id="savedItemsContainer" class="flex-grow overflow-y-auto p-6">
-                            <!-- Sample Saved Items -->
-                            <div id="savedItem1" class="mb-4 rounded-lg border p-4 hover:bg-[#FAF2EA]">
-                                <h3 class="font-medium text-[#4B5945]">Kosa Kata Dasar</h3>
-                                <p class="mt-2 text-sm text-gray-600">Modul pembelajaran bahasa Sunda untuk pemula</p>
+
+                        <div class="bg-[#4B5945] rounded-xl p-6">
+                            <h3 class="text-white font-semibold mb-4">Kamus Bahasa<br/>Indonesia - Sunda</h3>
+                            <button class="text-white">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="calendar-container">
+                        <learning-calendar></learning-calendar>
+                    </div>
+
+                    <!-- Leaderboard -->
+                    <div class="mt-8">
+                        <h3 class="text-[#4B5945] font-semibold mb-4">Pelajar Terbaik Minggu ini</h3>
+                        <div class="grid grid-cols-1 gap-3">
+                            <div class="bg-[#B2C9AD] rounded-xl p-4 flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <img src="/api/placeholder/40/40" alt="Profile" class="w-10 h-10 rounded-full"/>
+                                    <span class="text-[#4B5945] font-medium">Rama Paramarta</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[#4B5945]">Poin: 1980</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                </div>
                             </div>
-                            
-                            <div id="savedItem2" class="mb-4 rounded-lg border p-4 hover:bg-[#FAF2EA]">
-                                <h3 class="font-medium text-[#4B5945]">Percakapan Sehari-hari</h3>
-                                <p class="mt-2 text-sm text-gray-600">Latihan percakapan dasar bahasa Sunda</p>
+                            <div class="bg-[#F3F8F2] rounded-xl p-4 flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <img src="/api/placeholder/40/40" alt="Profile" class="w-10 h-10 rounded-full"/>
+                                    <span class="text-[#4B5945] font-medium">Puti Andam</span>
+                                </div>
+                                <span class="text-[#4B5945]">Poin: 982</span>
+                            </div>
+                            <div class="bg-[#F3F8F2] rounded-xl p-4 flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <img src="/api/placeholder/40/40" alt="Profile" class="w-10 h-10 rounded-full"/>
+                                    <span class="text-[#4B5945] font-medium">Sofea Maharani</span>
+                                </div>
+                                <span class="text-[#4B5945]">Poin: 890</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SAVED -->
+                    <div id="rightOverlay" class="fixed inset-0 z-30 bg-gray-900 bg-opacity-50 transition-opacity hidden" onclick="closeRightSidebar()"></div>
+                    <!-- Right Sidebar -->
+                    <div id="rightSidebar" class="fixed right-0 top-0 z-40 h-screen w-80 transform bg-white shadow-lg transition-transform duration-300 ease-in-out translate-x-full">
+                        <div class="flex h-full flex-col">
+                            <!-- Header Section -->
+                            <div class="flex items-center justify-between border-b px-6 py-4">
+                                <h2 class="text-xl font-semibold text-[#4B5945]">Tersimpan</h2>
+                                <button onclick="closeRightSidebar()" class="p-2 hover:bg-[#D1E9D1] rounded-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#4B5945]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <!-- Saved Items Container -->
+                            <div id="savedItemsContainer" class="flex-grow overflow-y-auto p-6">
+                                <!-- Sample Saved Items -->
+                                <div id="savedItem1" class="mb-4 rounded-lg border p-4 hover:bg-[#FAF2EA]">
+                                    <h3 class="font-medium text-[#4B5945]">Kosa Kata Dasar</h3>
+                                    <p class="mt-2 text-sm text-gray-600">Modul pembelajaran bahasa Sunda untuk pemula</p>
+                                </div>
+                                
+                                <div id="savedItem2" class="mb-4 rounded-lg border p-4 hover:bg-[#FAF2EA]">
+                                    <h3 class="font-medium text-[#4B5945]">Percakapan Sehari-hari</h3>
+                                    <p class="mt-2 text-sm text-gray-600">Latihan percakapan dasar bahasa Sunda</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </body>
