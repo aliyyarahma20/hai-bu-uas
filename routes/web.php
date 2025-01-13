@@ -47,9 +47,7 @@ Route::get('/dashboard', function () {
 
 
 // User Dashboard
-Route::get('/user/dashboard', function () {
-    return view('users.dashboard_user');
-})->middleware(['auth', 'role:student'])->name('user.dashboard');
+Route::get('/user/dashboard', [ModuleStudentController::class, 'show'])->middleware(['auth', 'role:student'])->name('user.dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -61,16 +59,17 @@ Route::middleware('auth')->group(function () {
     Route::post('/pilih-bahasa', [ModuleStudentController::class, 'store'])->name('pilih.bahasa.store');
 
     Route::middleware(['auth'])->group(function () {
-        // Route untuk halaman utama streak
+        // View route
         Route::get('/streaks', function () {
             return view('streaks.index');
         })->name('streaks.index');
-    
-        // API untuk mendapatkan data streak dan aktivitas
-        Route::get('/get-streak-data', [UserActivityController::class, 'getStreak'])->name('streak.data');
         
-        // API untuk mencatat kunjungan
-        Route::post('/track-visit', [UserActivityController::class, 'track'])->name('streak.track');
+        // API routes
+        Route::prefix('api')->group(function () {
+            Route::get('/user-activities', [UserActivityController::class, 'index']);
+            Route::post('/user-activities', [UserActivityController::class, 'store']);
+            Route::get('/user-activities/streak', [UserActivityController::class, 'getStreak']);
+        });
     });
 
     Route::prefix('dashboard')->name('dashboard.')->group(function (){
@@ -98,6 +97,8 @@ Route::middleware('auth')->group(function () {
         // Route data kamus
         Route::resource('kamus', KamusController::class)
         ->middleware('role:admin');
+
+        
     
 
         Route::get('/module-bahasa/students/show/{module-bahasa}', [ModuleStudentController::class, 'index'])

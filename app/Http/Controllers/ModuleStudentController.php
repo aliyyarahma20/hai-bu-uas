@@ -92,6 +92,10 @@ class ModuleStudentController extends Controller
     public function show(ModuleStudents $moduleStudents)
     {
         //
+        $modules = ModuleBahasa::All();
+        return view('users.dashboard_user',[
+            'modules' => $modules,
+        ]);
     }
 
     /**

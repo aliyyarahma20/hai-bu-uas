@@ -482,10 +482,11 @@
                     </div>
 
                     <!-- Modules Grid -->
+                    @forelse ($modules as $modul)
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
                         <div class="module-card bg-[#4B5945] rounded-xl p-6">
                             <h3 class="text-white font-semibold">Modul 1:</h3>
-                            <p class="text-white mb-4">Tingaktan Bahasa</p>
+                            <p class="text-white mb-4">{{$modul->nama}}</p>
                             <div class="progress-bar" style="width: 70%"></div>
                         </div>
 
@@ -501,7 +502,8 @@
                             <div class="progress-bar" style="width: 35%"></div>
                         </div>
                     </div>
-
+                    @empty
+                    @endforelse
                     <!-- Quiz Section -->
                     <div class="bg-white rounded-xl p-6 mb-8 flex justify-between items-center">
                         <div>

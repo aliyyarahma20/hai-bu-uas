@@ -1,10 +1,10 @@
 <template>
+  <!-- Template sama seperti sebelumnya -->
   <div class="bg-[#4B5945] rounded-xl p-6">
     <h3 class="text-white font-semibold mb-4">Progress Belajarmu</h3>
     <div class="bg-white rounded-lg p-4">
-      <!-- Navigation bulan -->
-      <div class="flex justify-between items-center mb-4">
-        <button @click="handlePrevMonth" class="text-[#4B5945]">
+      <div class="flex justify-between items-center mb-6">
+        <button @click="handlePrevWeek" class="text-[#4B5945]">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
           </svg>
@@ -12,30 +12,23 @@
 
         <span class="text-[#4B5945] font-medium">{{ formattedMonth }}</span>
 
-        <button @click="handleNextMonth" class="text-[#4B5945]">
+        <button @click="handleNextWeek" class="text-[#4B5945]">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
           </svg>
         </button>
       </div>
 
-      <!-- Calendar grid -->
-      <div class="grid grid-cols-7 gap-2">
-        <!-- Header hari -->
-        <div v-for="day in weekDays" :key="day" class="text-sm font-medium text-gray-600 text-center">
-          {{ day }}
-        </div>
-
-        <!-- Blank spaces di awal bulan -->
-        <div v-for="index in firstDayOfMonth" :key="'empty-'+index" class="calendar-day"></div>
-
-        <!-- Hari-hari dalam bulan -->
-        <div v-for="day in daysInMonth" 
-             :key="'day-'+day"
-             class="calendar-day h-8 w-8 rounded-full flex items-center justify-center cursor-pointer"
-             :class="getDayClass(day)"
-             @click="markDay(day)">
-          {{ day }}
+      <div class="flex justify-between items-center">
+        <div v-for="(day, index) in weekDays" :key="index" class="flex flex-col items-center w-12">
+          <div class="text-sm text-gray-600 mb-2" :class="getDayNameClass(index)">{{ day }}</div>
+          <div 
+            class="flex items-center justify-center w-8 h-8 rounded-full cursor-pointer"
+            :class="getDayClass(weekDates[index])"
+            @click="markDay(weekDates[index])"
+          >
+            {{ weekDates[index].getDate() }}
+          </div>
         </div>
       </div>
     </div>
@@ -43,103 +36,173 @@
 </template>
 
 <script>
-import axios from 'axios'; // Import axios di bagian atas script
-
 export default {
   data() {
     return {
-      currentMonth: new Date(),
+      currentDate: new Date(),
       weekDays: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
-      visitedDates: [], // Akan diisi dari API
-      streakCount: 0
+      visitedDates: [],
+      streakDates: [],
+      currentStreak: 0,
+      userId: 3,
+      // Data testing sesuai dengan database Anda
+      mockData: [
+        { id: 1, user_id: 3, visit_date: '2025-01-12', created_at: '2025-01-12 00:33:09' },
+        { id: 2, user_id: 3, visit_date: '2025-01-12', created_at: '2025-01-12 00:47:56' },
+        { id: 3, user_id: 3, visit_date: '2025-01-13', created_at: '2025-01-13 01:06:09' },
+        { id: 4, user_id: 3, visit_date: '2025-01-13', created_at: '2025-01-13 09:01:33' },
+        { id: 4, user_id: 3, visit_date: '2025-01-11', created_at: '2025-01-13 09:01:33' },
+      ]
     };
   },
 
   computed: {
+    weekDates() {
+      const dates = [];
+      const currentDay = this.currentDate.getDay();
+      const startDate = new Date(this.currentDate);
+      startDate.setDate(this.currentDate.getDate() - currentDay);
+      
+      for (let i = 0; i < 7; i++) {
+        const date = new Date(startDate);
+        date.setDate(startDate.getDate() + i);
+        dates.push(date);
+      }
+      
+      return dates;
+    },
+
     formattedMonth() {
-      return this.currentMonth.toLocaleDateString('id-ID', { 
-        month: 'long', 
-        year: 'numeric' 
+      return this.currentDate.toLocaleDateString('id-ID', { 
+        month: 'long',
+        year: 'numeric'
       });
-    },
-
-    daysInMonth() {
-      return new Date(
-        this.currentMonth.getFullYear(),
-        this.currentMonth.getMonth() + 1,
-        0
-      ).getDate();
-    },
-
-    firstDayOfMonth() {
-      return new Date(
-        this.currentMonth.getFullYear(),
-        this.currentMonth.getMonth(),
-        1
-      ).getDay();
     }
   },
 
   methods: {
-    handlePrevMonth() {
-      this.currentMonth.setMonth(this.currentMonth.getMonth() - 1);
-      this.fetchStreakData(); // Ambil data streak setelah bulan berubah
+    handlePrevWeek() {
+      const newDate = new Date(this.currentDate);
+      newDate.setDate(newDate.getDate() - 7);
+      this.currentDate = newDate;
+      this.fetchStreakData();
     },
 
-    handleNextMonth() {
-      this.currentMonth.setMonth(this.currentMonth.getMonth() + 1);
-      this.fetchStreakData(); // Ambil data streak setelah bulan berubah
+    handleNextWeek() {
+      const newDate = new Date(this.currentDate);
+      newDate.setDate(newDate.getDate() + 7);
+      this.currentDate = newDate;
+      this.fetchStreakData();
     },
 
-    getDayClass(day) {
-      const currentDate = new Date(
-        this.currentMonth.getFullYear(),
-        this.currentMonth.getMonth(),
-        day
-      ).toISOString().split('T')[0]; // Format tanggal
+    formatDate(date) {
+      const d = new Date(date);
+      return d.toISOString().split('T')[0];
+    },
 
+    getDayNameClass(index) {
       return {
-        'bg-green-500 text-white': this.visitedDates.includes(currentDate), // Tandai dengan warna hijau jika sudah dikunjungi
-        'hover:bg-gray-100': !this.visitedDates.includes(currentDate) // Hover effect jika belum dikunjungi
+        'text-[#4B5945]': index === this.currentDate.getDay()
       };
     },
 
-    async fetchStreakData() {
+    getDayClass(date) {
+      const formattedDate = this.formatDate(date);
+      const isToday = formattedDate === this.formatDate(new Date());
+      const isStreakDay = this.streakDates.includes(formattedDate);
+      
+      return {
+        'bg-[#B2C9AD] text-white': isStreakDay,
+        'border-2 border-[#4B5945]': isToday,
+        'text-[#4B5945]': !isStreakDay,
+        'hover:bg-gray-100': !isStreakDay
+      };
+    },
+
+    fetchStreakData() {
       try {
-        // Ambil data dari API untuk mendapatkan tanggal yang sudah dikunjungi
-        const response = await axios.get('/get-streak-data');
-        this.visitedDates = response.data.visited_dates; // Menyimpan tanggal yang sudah dikunjungi
-        this.streakCount = response.data.streak; // Menyimpan streak yang terbaru
+        // Gunakan mockData untuk testing
+        const data = this.mockData.filter(item => item.user_id === this.userId);
+        
+        // Dapatkan tanggal unik
+        const uniqueDates = [...new Set(
+          data.map(activity => activity.visit_date)
+        )].sort();
+        
+        console.log('Tanggal unik:', uniqueDates);
+        
+        this.visitedDates = uniqueDates;
+        this.calculateStreak(uniqueDates);
       } catch (error) {
-        console.error('Error fetching streak data:', error);
+        console.error('Error dalam mengambil data streak:', error);
       }
     },
 
-    async markDay(day) {
-      const date = new Date(
-        this.currentMonth.getFullYear(),
-        this.currentMonth.getMonth(),
-        day
-      ).toISOString().split('T')[0]; // Format tanggal
+    calculateStreak(dates) {
+      if (!dates.length) {
+        this.streakDates = [];
+        this.currentStreak = 0;
+        return;
+      }
 
-      try {
-        // Kirim data ke backend untuk mencatat aktivitas hari tersebut
-        await axios.post('/track-visit', { date });
-        await this.fetchStreakData(); // Ambil data streak terbaru setelah menandai hari
-      } catch (error) {
-        console.error('Error marking day:', error);
+      console.log('Menghitung streak untuk tanggal:', dates);
+
+      // Konversi string tanggal ke objek Date
+      const datesToCheck = dates.map(date => new Date(date));
+      
+      // Urutkan tanggal dari yang terlama ke terbaru
+      datesToCheck.sort((a, b) => a - b);
+      
+      let currentStreak = [this.formatDate(datesToCheck[0])];
+      
+      // Cek setiap tanggal berurutan
+      for (let i = 1; i < datesToCheck.length; i++) {
+        const prevDate = datesToCheck[i - 1];
+        const currDate = datesToCheck[i];
+        
+        // Hitung selisih hari
+        const diffTime = Math.abs(currDate - prevDate);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
+        console.log(`Membandingkan ${this.formatDate(prevDate)} dengan ${this.formatDate(currDate)}, selisih: ${diffDays} hari`);
+        
+        if (diffDays === 1) {
+          currentStreak.push(this.formatDate(currDate));
+        } else {
+          break; // Streak terputus
+        }
+      }
+
+      this.streakDates = currentStreak;
+      this.currentStreak = currentStreak.length;
+      
+      console.log('Streak akhir:', this.streakDates);
+      console.log('Panjang streak:', this.currentStreak);
+    },
+
+    async markDay(date) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+      const selectedDate = new Date(date);
+      selectedDate.setHours(0, 0, 0, 0);
+      
+      if (selectedDate.getTime() === today.getTime()) {
+        // Untuk testing, tambahkan ke mockData
+        this.mockData.push({
+          id: this.mockData.length + 1,
+          user_id: this.userId,
+          visit_date: this.formatDate(date),
+          created_at: new Date().toISOString()
+        });
+        
+        this.fetchStreakData();
       }
     }
   },
 
   mounted() {
-    this.fetchStreakData(); // Ambil data saat component dimuat
+    this.fetchStreakData();
   }
 };
 </script>
-
-<style scoped>
-.calendar-day {
-  aspect-ratio: 1;
-}
-</style>
