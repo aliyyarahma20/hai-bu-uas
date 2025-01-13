@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        @vite(['resources/js/app.js', 'resources/css/app.css'])
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://cdn.tailwindcss.com"></script>
@@ -303,7 +302,6 @@
                 color: white;
             } */
         </style>
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="bg-[#FAF2EA]">
             <!-- Overlay - only visible on mobile when sidebar is open -->
@@ -391,7 +389,7 @@
                             id="searchInput"
                             placeholder="Apa yang kamu cari?" 
                             class="w-full rounded-full bg-white px-4 py-2 shadow-sm 
-                                    border border-gray-200
+                                    border border-gray-200 
                                     placeholder-gray-400
                                     focus:outline-none focus:ring-2 focus:ring-[#4B5945] focus:border-transparent
                                     transition-all duration-200"/>
@@ -536,6 +534,7 @@
                     <div id="calendar-container">
                         <learning-calendar></learning-calendar>
                     </div>
+                    <script src="{{ mix('js/app.js') }}"></script>
 
                     <!-- Leaderboard -->
                     <div class="mt-8">
@@ -666,5 +665,6 @@
 
             </div>
         </div>
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
     </body>
 </html>
