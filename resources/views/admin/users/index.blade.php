@@ -33,7 +33,9 @@
                     </div> 
                     <div class="flex flex-col gap-[2px]">
                         <p class="font-bold text-lg">{{$user->name}}</p>
-                        <p class="text-[#7F8190]">Pengguna</p>
+                        @foreach ($user->getRoleNames() as $role)
+                        <p class="text-[#7F8190]">{{$role}}</p>
+                        @endforeach
                     </div>
                 </div>
             </div>

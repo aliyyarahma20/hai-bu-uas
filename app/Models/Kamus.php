@@ -15,6 +15,6 @@ class Kamus extends Model
     ];
 
     public function category(){
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->belongsTo(Category::class, 'categories_id');
     }
 }

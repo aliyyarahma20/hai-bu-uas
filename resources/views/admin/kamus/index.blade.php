@@ -4,11 +4,13 @@
 
 @section('content')
 <div id="menu-content" class="flex flex-col w-full pb-[30px]">
-<div class="flex flex-col px-5 mt-5">
-    <div class="w-full flex justify-between items-center">
-        <div class="flex flex-col gap-1">
-            <p class="font-extrabold text-[30px] leading-[45px]">Kamus</p>
-            <p class="text-[#7F8190]">Manajemen kamus setiap modul</p>
+    <div class="flex flex-col px-5 mt-5">
+        <div class="w-full flex justify-between items-center">
+            <div class="flex flex-col gap-1">
+                <p class="font-extrabold text-[30px] leading-[45px]">Kamus</p>
+                <p class="text-[#7F8190]">Manajemen kamus setiap modul</p>
+            </div>
+            <a href="{{route('dashboard.kamus.create')}}" class="h-[52px] p-[14px_20px] bg-[#91AC8F] rounded-full font-bold text-white transition-all duration-300 hover:bg-[#66785F]">Buat Kamus Baru</a>
         </div>
     </div>
 </div>
@@ -43,14 +45,18 @@
                             Menu
                             <img src="{{asset('images/icons/arrow-down.svg')}}" alt="icon">
                         </button>
-                        <a href="" class="flex items-center justify-between font-bold text-sm w-full">
+                        <a href="{{ route('dashboard.kamus.edit', $kamus) }}" class="flex items-center justify-between font-bold text-sm w-full">
                             Edit Kamus
                         </a>
                         
-                        @if (session('error'))
-                            <div class="alert alert-danger">
-                                {{ session('error') }}
-                            </div>
+                        @if ($errors->any())
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li class="py-5 px-5 bg-red-700 text-white">
+                                {{ $error }}
+                            </li>
+                            @endforeach
+                        </ul>
                         @endif
 
 

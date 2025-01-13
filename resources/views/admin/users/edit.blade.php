@@ -35,7 +35,7 @@
                 <div class="relative file-preview z-10 w-full h-full">
                     <img src="{{Storage::url($user->photos)}}" class="thumbnail-icon w-full h-full object-cover" alt="thumbnail">
                 </div>
-                <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 text-center font-semibold text-sm text-[#7F8190]">Gambar <br>Modul</span>
+                <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 text-center font-semibold text-sm text-[#7F8190]">Photo <br>Profile</span>
             </div>
             <button type="button" class="flex shrink-0 p-[8px_20px] h-fit items-center rounded-full bg-[#91AC8F] font-semibold text-white hover:bg-[#66785F]" onclick="document.getElementById('icon').click()">
                 Ubah Foto
@@ -59,18 +59,18 @@
                 <input value="{{$user->email}}" type="text" class="font-semibold placeholder:text-[#7F8190] placeholder:font-normal w-full outline-none" name="email" required>
             </div>
         </div>
-        <div class="flex flex-col gap-[10px]">
+        {{-- <div class="flex flex-col gap-[10px]">
             <p class="font-semibold">Password</p>
             <div class="flex items-center w-[500px] h-[52px] p-[14px_16px] rounded-full border border-[#EEEEEE] transition-all duration-300 focus-within:border-2 focus-within:border-[#0A090B]">
                 <div class="mr-[14px] w-6 h-6 flex items-center justify-center overflow-hidden">
                     <img src="{{asset('images/icons/note-favorite-outline.svg')}}" class="w-full h-full object-contain" alt="icon">
                 </div>
-                <input value="{{$user->password}}" type="text" class="font-semibold placeholder:text-[#7F8190] placeholder:font-normal w-full outline-none" name="password" required>
+                <input value="{{$user->password}}" type="hidden" class="font-semibold placeholder:text-[#7F8190] placeholder:font-normal w-full outline-none" name="password" required>
             </div>
-        </div>       
+        </div>        --}}
         
         <div class="flex items-center gap-5">
-            <button type="submit" class="w-full h-[52px] p-[14px_20px] bg-[#91AC8F] rounded-full font-bold text-white transition-all duration-300 hover:bg-[#66785F] text-center">Simpan Modul</button>
+            <button type="submit" class="w-full h-[52px] p-[14px_20px] bg-[#91AC8F] rounded-full font-bold text-white transition-all duration-300 hover:bg-[#66785F] text-center">Simpan</button>
         </div>
     </form>
 </div>

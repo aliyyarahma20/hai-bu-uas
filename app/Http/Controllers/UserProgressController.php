@@ -19,10 +19,8 @@ class UserProgressController extends Controller
     {
         //
         $user = User::orderBy('id', 'DESC')->get();
-        
-
         return view('admin.users.index', [
-            'user'=> $user
+            'user'=> $user,
         ]);
     }
 
@@ -65,37 +63,35 @@ class UserProgressController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, User $user)
-{
-    $validated = $request->validate([
-        'name' => 'required|string|max:225',
-        'email' => 'required|string|email',
-        'password' => 'nullable|string|min:8',
-        'photos' => 'sometimes|image|mimes:jpeg,png,jpg,gif',
-    ]);
-
-    DB::beginTransaction();
-    try {
-        if ($request->hasFile('photos')) {
-            $coverPath = $request->file('photos')->store('produc_photos', 'public');
-            $validated['photos'] = $coverPath;
-        }
-
-        if ($request->filled('password')) {
-            $validated['password'] = Hash::make($request->password);
-        }
-
-        $user->update($validated);
-
-        DB::commit();
-        return redirect()->route('dashboard.user.index');
-    } catch (\Exception $e) {
-        DB::rollBack();
-        $error = ValidationException::withMessages([
-            'system_error' => ['System error!', $e->getMessage()],
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:225',
+            'email' => 'required|string|email',
+            'photos' => 'sometimes|image|mimes:jpeg,png,jpg,gif',
         ]);
-        throw $error;
+
+        DB::beginTransaction();
+        try {
+            if ($request->hasFile('photos')) {
+                $coverPath = $request->file('photos')->store('produc_photos', 'public');
+                $validated['photos'] = $coverPath;
+            }
+
+            // Jangan mengubah password
+            $user->update($validated);
+
+            DB::commit();
+            return redirect()->route('dashboard.user.index')->with('success', 'User updated successfully.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $error = ValidationException::withMessages([
+                'system_error' => ['System error!', $e->getMessage()],
+            ]);
+            throw $error;
+        }
     }
-}
+
+
 
 
     /**

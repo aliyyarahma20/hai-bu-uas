@@ -19,5 +19,8 @@ class Category extends Model
         return $this->hasMany(ModuleBahasa::class, 'categories_id');
     }
 
-
+    public function kamus()
+    {
+        return $this->hasOne(Kamus::class, 'categories_id');
+    }
 }
