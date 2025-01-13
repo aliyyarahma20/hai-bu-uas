@@ -480,28 +480,24 @@
                     </div>
 
                     <!-- Modules Grid -->
-                    @forelse ($modules as $modul)
+                   
+                    @php
+                    $colors = ['bg-[#4B5945]', 'bg-[#66785F]', 'bg-[#B2C9AD]'];
+                    @endphp
+
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                        <div class="module-card bg-[#4B5945] rounded-xl p-6">
-                            <h3 class="text-white font-semibold">Modul 1:</h3>
+                        @forelse ($modules as $index => $modul)
+                        <a href="{{route('dashboard.learning.index')}}" class="w-full text-left {{ $colors[$index % count($colors)] }} rounded-xl p-6 transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                            <h3 class="text-white font-semibold">Modul {{$index + 1}}:</h3>
                             <p class="text-white mb-4">{{$modul->nama}}</p>
-                            <div class="progress-bar" style="width: 70%"></div>
-                        </div>
-
-                        <div class="module-card bg-[#66785F] rounded-xl p-6">
-                            <h3 class="text-white font-semibold">Modul 2:</h3>
-                            <p class="text-white mb-4">Percakapan Sehari-hari</p>
-                            <div class="progress-bar" style="width: 85%"></div>
-                        </div>
-
-                        <div class="module-card bg-[#B2C9AD] rounded-xl p-6">
-                            <h3 class="text-white font-semibold">Modul 3:</h3>
-                            <p class="text-white mb-4">Kata Kerja</p>
-                            <div class="progress-bar" style="width: 35%"></div>
-                        </div>
+                            <div class="w-full bg-white/20 rounded-full h-2">
+                                <div class="bg-white rounded-full h-2 transition-all duration-500" style="width: 70%"></div>
+                            </div>
+                        </a>
+                        @empty
+                        @endforelse
                     </div>
-                    @empty
-                    @endforelse
+                    
                     <!-- Quiz Section -->
                     <div class="bg-white rounded-xl p-6 mb-8 flex justify-between items-center">
                         <div>
