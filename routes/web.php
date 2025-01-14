@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\KamusController;
 use App\Http\Controllers\LearningController;
 use App\Http\Controllers\ModuleBahasaController;
@@ -124,7 +125,7 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:student')
         ->name('learning.rapport.module-bahasa');
 
-        Route::get('/learning', [LearningController::class, 'index'])
+        Route::get('/learning/{moduleId?}', [LearningController::class, 'index'])
         ->middleware('role:student')
         ->name('learning.index');
 
