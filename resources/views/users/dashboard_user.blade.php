@@ -487,7 +487,8 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
                         @forelse ($modules as $index => $modul)
-                        <a href="{{route('dashboard.learning.index')}}" class="w-full text-left {{ $colors[$index % count($colors)] }} rounded-xl p-6 transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        <a href="{{ route('dashboard.learning.index', $modul->id) }}" 
+                        class="w-full text-left {{ $colors[$index % count($colors)] }} rounded-xl p-6 transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                             <h3 class="text-white font-semibold">Modul {{$index + 1}}:</h3>
                             <p class="text-white mb-4">{{$modul->nama}}</p>
                             <div class="w-full bg-white/20 rounded-full h-2">

@@ -44,6 +44,24 @@ class AuthenticatedSessionController extends Controller
         // Jika berhasil login
         $request->session()->regenerate();
 
+        // Tambahkan logika untuk mengarahkan ke pilih-bahasa.edit
+        $user = auth()->user();
+        $moduleStudent = \App\Models\ModuleStudents::where('user_id', $user->id)->first();
+
+        if ($moduleStudent) {
+            // Jika data ditemukan, arahkan ke halaman edit
+            return redirect()->route('pilih.bahasa.edit', $moduleStudent->id);
+        } else {
+            // Jika data tidak ditemukan, buat data baru lalu arahkan
+            $newModuleStudent = \App\Models\ModuleStudents::create([
+                'user_id' => $user->id,
+                'categories_id' => null, // Atau nilai default
+            ]);
+
+            return redirect()->route('pilih.bahasa.edit', $newModuleStudent->id);
+        }
+
+        // Default redirect jika logika di atas gagal
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 

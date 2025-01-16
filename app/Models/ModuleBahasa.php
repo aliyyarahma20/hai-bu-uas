@@ -14,6 +14,10 @@ class ModuleBahasa extends Model
         'id',
     ];
 
+    protected $fillable = [
+        'nama', 'description'
+    ];
+
     public function category(){
         return $this->belongsTo(Category::class, 'categories_id');
     }

@@ -14,6 +14,9 @@ class ModuleStudents extends Model
         'id',
     ];
 
+    protected $fillable = ['user_id', 'categories_id'];
+
+
     /**
      * Relasi ke tabel User
      * Setiap ModuleStudents berhubungan dengan satu User.
@@ -27,9 +30,9 @@ class ModuleStudents extends Model
      * Relasi ke tabel ModuleBahasa
      * Setiap ModuleStudents berhubungan dengan satu ModuleBahasa.
      */
-    public function moduleBahasa()
+    public function category()
     {
-        return $this->belongsTo(ModuleBahasa::class, 'module_bahasa_id');
+        return $this->belongsTo(Category::class);
     }
 
    
