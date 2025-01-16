@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->date('visit_date');
+            $table->softDeletes();
             $table->timestamps();
 
             // Tambahkan constraint unique pada user_id dan visit_date
