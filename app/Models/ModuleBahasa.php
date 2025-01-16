@@ -15,7 +15,11 @@ class ModuleBahasa extends Model
     ];
 
     protected $fillable = [
-        'nama', 'description'
+        'nama',
+        'description',
+        'categories_id',
+        'cover',
+        'slug',
     ];
 
     public function category(){
