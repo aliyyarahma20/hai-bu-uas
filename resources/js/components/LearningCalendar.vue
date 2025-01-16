@@ -1,5 +1,4 @@
 <template>
-  <!-- Template sama seperti sebelumnya -->
   <div class="bg-[#4B5945] rounded-xl p-6">
     <h3 class="text-white font-semibold mb-4">Progress Belajarmu</h3>
     <div class="bg-white rounded-lg p-4">
@@ -36,23 +35,17 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
       currentDate: new Date(),
-      weekDays: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
+      weekDays: ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"],
       visitedDates: [],
       streakDates: [],
       currentStreak: 0,
-      userId: 3,
-      // Data testing sesuai dengan database Anda
-      mockData: [
-        { id: 1, user_id: 3, visit_date: '2025-01-12', created_at: '2025-01-12 00:33:09' },
-        { id: 2, user_id: 3, visit_date: '2025-01-12', created_at: '2025-01-12 00:47:56' },
-        { id: 3, user_id: 3, visit_date: '2025-01-13', created_at: '2025-01-13 01:06:09' },
-        { id: 4, user_id: 3, visit_date: '2025-01-13', created_at: '2025-01-13 09:01:33' },
-        { id: 4, user_id: 3, visit_date: '2025-01-11', created_at: '2025-01-13 09:01:33' },
-      ]
+      lastVisitDate: null,
     };
   },
 
@@ -62,22 +55,22 @@ export default {
       const currentDay = this.currentDate.getDay();
       const startDate = new Date(this.currentDate);
       startDate.setDate(this.currentDate.getDate() - currentDay);
-      
+
       for (let i = 0; i < 7; i++) {
         const date = new Date(startDate);
         date.setDate(startDate.getDate() + i);
         dates.push(date);
       }
-      
+
       return dates;
     },
 
     formattedMonth() {
-      return this.currentDate.toLocaleDateString('id-ID', { 
-        month: 'long',
-        year: 'numeric'
+      return this.currentDate.toLocaleDateString("id-ID", {
+        month: "long",
+        year: "numeric",
       });
-    }
+    },
   },
 
   methods: {
@@ -85,56 +78,58 @@ export default {
       const newDate = new Date(this.currentDate);
       newDate.setDate(newDate.getDate() - 7);
       this.currentDate = newDate;
-      this.fetchStreakData();
     },
 
     handleNextWeek() {
       const newDate = new Date(this.currentDate);
       newDate.setDate(newDate.getDate() + 7);
       this.currentDate = newDate;
-      this.fetchStreakData();
     },
 
     formatDate(date) {
       const d = new Date(date);
-      return d.toISOString().split('T')[0];
+      return d.toISOString().split("T")[0];
     },
 
     getDayNameClass(index) {
+      const today = new Date();
       return {
-        'text-[#4B5945]': index === this.currentDate.getDay()
+        "text-[#4B5945]": index === today.getDay(),
       };
     },
 
     getDayClass(date) {
       const formattedDate = this.formatDate(date);
-      const isToday = formattedDate === this.formatDate(new Date());
+      const isVisited = this.visitedDates.includes(formattedDate);
+      const isLastVisit = this.lastVisitDate === formattedDate;
       const isStreakDay = this.streakDates.includes(formattedDate);
-      
+
       return {
-        'bg-[#B2C9AD] text-white': isStreakDay,
-        'border-2 border-[#4B5945]': isToday,
-        'text-[#4B5945]': !isStreakDay,
-        'hover:bg-gray-100': !isStreakDay
+        "bg-[#B2C9AD] text-white": isStreakDay,
+        "border-2 border-[#4B5945]": isLastVisit,
+        "bg-[#FFD700] text-black": isVisited && !isStreakDay && !isLastVisit,
+        "text-[#4B5945]": !isStreakDay && !isVisited,
+        "hover:bg-gray-100": !isStreakDay && !isVisited,
       };
     },
 
-    fetchStreakData() {
+    async fetchStreakData() {
       try {
-        // Gunakan mockData untuk testing
-        const data = this.mockData.filter(item => item.user_id === this.userId);
+        const response = await axios.get("http://127.0.0.1:8000/api/user-activities");
+        const data = response.data;
         
-        // Dapatkan tanggal unik
-        const uniqueDates = [...new Set(
-          data.map(activity => activity.visit_date)
-        )].sort();
-        
-        console.log('Tanggal unik:', uniqueDates);
-        
+        // Mengambil semua tanggal kunjungan
+        const uniqueDates = [...new Set(data.map(activity => activity.visit_date))].sort();
         this.visitedDates = uniqueDates;
+        
+        // Mengambil tanggal kunjungan terakhir
+        if (data.length > 0) {
+          this.lastVisitDate = data[data.length - 1].visit_date;
+        }
+        
         this.calculateStreak(uniqueDates);
       } catch (error) {
-        console.error('Error dalam mengambil data streak:', error);
+        console.error("Error dalam mengambil data streak:", error);
       }
     },
 
@@ -145,64 +140,56 @@ export default {
         return;
       }
 
-      console.log('Menghitung streak untuk tanggal:', dates);
-
-      // Konversi string tanggal ke objek Date
       const datesToCheck = dates.map(date => new Date(date));
-      
-      // Urutkan tanggal dari yang terlama ke terbaru
       datesToCheck.sort((a, b) => a - b);
-      
+
       let currentStreak = [this.formatDate(datesToCheck[0])];
-      
-      // Cek setiap tanggal berurutan
+
       for (let i = 1; i < datesToCheck.length; i++) {
         const prevDate = datesToCheck[i - 1];
         const currDate = datesToCheck[i];
-        
-        // Hitung selisih hari
+
         const diffTime = Math.abs(currDate - prevDate);
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        
-        console.log(`Membandingkan ${this.formatDate(prevDate)} dengan ${this.formatDate(currDate)}, selisih: ${diffDays} hari`);
-        
+
         if (diffDays === 1) {
           currentStreak.push(this.formatDate(currDate));
         } else {
-          break; // Streak terputus
+          break;
         }
       }
 
       this.streakDates = currentStreak;
       this.currentStreak = currentStreak.length;
-      
-      console.log('Streak akhir:', this.streakDates);
-      console.log('Panjang streak:', this.currentStreak);
     },
 
     async markDay(date) {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
+      const formattedDate = this.formatDate(date);
       
-      const selectedDate = new Date(date);
-      selectedDate.setHours(0, 0, 0, 0);
-      
-      if (selectedDate.getTime() === today.getTime()) {
-        // Untuk testing, tambahkan ke mockData
-        this.mockData.push({
-          id: this.mockData.length + 1,
-          user_id: this.userId,
-          visit_date: this.formatDate(date),
-          created_at: new Date().toISOString()
+      try {
+        await axios.post("http://127.0.0.1:8000/api/user-activities", {
+          visit_date: formattedDate,
         });
         
-        this.fetchStreakData();
+        // Update lastVisitDate setelah berhasil marking
+        this.lastVisitDate = formattedDate;
+        
+        // Refresh data
+        await this.fetchStreakData();
+      } catch (error) {
+        console.error("Error saat menambahkan aktivitas:", error);
       }
-    }
+    },
   },
 
-  mounted() {
-    this.fetchStreakData();
+  async mounted() {
+    await this.fetchStreakData();
+  },
+
+  watch: {
+    currentDate() {
+      this.fetchStreakData();
+    }
   }
 };
 </script>
