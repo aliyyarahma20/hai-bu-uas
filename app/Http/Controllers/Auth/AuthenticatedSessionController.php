@@ -46,6 +46,14 @@ class AuthenticatedSessionController extends Controller
 
         // Tambahkan logika untuk mengarahkan ke pilih-bahasa.edit
         $user = auth()->user();
+
+        // Periksa role pengguna
+        if ($user->hasRole('admin')) {
+            // Jika role admin, arahkan ke RouteServiceProvider::HOME
+            return redirect()->intended(RouteServiceProvider::HOME);
+        }
+
+        // Logika untuk pengguna non-admin
         $moduleStudent = \App\Models\ModuleStudents::where('user_id', $user->id)->first();
 
         if ($moduleStudent) {
@@ -60,9 +68,6 @@ class AuthenticatedSessionController extends Controller
 
             return redirect()->route('pilih.bahasa.edit', $newModuleStudent->id);
         }
-
-        // Default redirect jika logika di atas gagal
-        return redirect()->intended(RouteServiceProvider::HOME);
     }
 
 
