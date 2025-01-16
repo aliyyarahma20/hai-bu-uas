@@ -53,9 +53,10 @@ Route::post('pilih-bahasa', [ModuleStudentController::class, 'store'])->name('pi
 Route::get('dashboard/pilih-bahasa/{moduleStudents}', [ModuleStudentController::class, 'edit'])->name('pilih.bahasa.edit');
 Route::put('dashboard/pilih-bahasa/{moduleStudents}', [ModuleStudentController::class, 'update'])->name('pilih.bahasa.update');
 
-
-
 // User Dashboard
+Route::get('/user/dashboard/{id}', [ModuleStudentController::class, 'show'])->middleware(['auth', 'role:student'])->name('user.dashboard');
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
