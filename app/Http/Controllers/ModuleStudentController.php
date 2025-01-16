@@ -17,12 +17,11 @@ class ModuleStudentController extends Controller
      */
     public function index()
     {
-        //
         // Ambil daftar modul yang berisi kategori tertentu
-        $moduls = ModuleBahasa::with('category')->get();
+        $categories = Category::all();
 
-        return view('pilih-bahasa', [
-            'moduls' => $moduls
+        return view('users.pilih-bahasa.index', [
+            'categories' => $categories,    
         ]);
     }
 
@@ -31,11 +30,7 @@ class ModuleStudentController extends Controller
      */
     public function create(ModuleBahasa $moduleBahasa)
     {
-        //
-        $categories = Category::all();
-        return view('pilih-bahasa', [
-            'categories' => $categories
-        ]);
+        
     }
 
     /**
@@ -43,67 +38,80 @@ class ModuleStudentController extends Controller
      */
     public function store(Request $request)
     {
-    // Validasi input category_id
-    $request->validate([
-        'categories_id' => 'required|exists:categories,id', // Pastikan category_id ada
-    ]);
-
-    // Ambil kategori yang dipilih
-    $category = Category::findOrFail($request->categories_id);
-
-    // Ambil semua ModuleBahasa yang terkait dengan category_id yang dipilih
-    $moduleBahasas = $category->moduleBahasas;
-
-    // Jika tidak ada ModuleBahasa untuk kategori ini, tampilkan pesan error
-    if ($moduleBahasas->isEmpty()) {
-        return back()->withErrors(['module_bahasa' => 'Tidak ada Module Bahasa untuk kategori ini.']);
-    }
-
-    // Mulai transaksi DB
-    DB::beginTransaction();
-    try {
-        // Simpan data ModuleStudents untuk setiap ModuleBahasa yang relevan
-        foreach ($moduleBahasas as $moduleBahasa) {
-            ModuleStudents::create([
-                'user_id' => auth()->id(),
-                'module_bahasa_id' => $moduleBahasa->id,
-            ]);
-        }
-
-        // Commit transaksi jika berhasil
-        DB::commit();
-
-        // Redirect ke halaman learning setelah berhasil
-        return redirect()->route('dashboard.learning.index')->with('success', 'Module Bahasa berhasil dipilih!');
-    } catch (\Exception $e) {
-        // Rollback transaksi jika terjadi error
-        DB::rollBack();
-        $error = ValidationException::withMessages([
-            'system_error' => ['System error!', $e->getMessage()],
+        // Validasi input category_id
+        $request->validate([
+            'categories_id' => 'required|exists:categories,id', // Pastikan category_id ada
         ]);
-        throw $error;
-    }
+
+        // Ambil kategori yang dipilih
+        $category = Category::findOrFail($request->categories_id);
+        // Ambil semua ModuleBahasa yang terkait dengan category_id yang dipilih
+
+        // Mulai transaksi DB
+        DB::beginTransaction();
+        try {
+            $moduleStudents = ModuleStudents::create([
+                    'user_id' => auth()->id(),
+                    'categories_id' => $category->id,
+                ]);
+            
+            // Commit transaksi jika berhasil
+            DB::commit();
+    
+            // Redirect ke halaman learning setelah berhasil
+            return redirect()->route('user.dashboard', ['id' => $moduleStudents->id])->with('success', 'Module Bahasa berhasil dipilih!');
+        } catch (\Exception $e) {
+            // Rollback transaksi jika terjadi error
+            DB::rollBack();
+            $error = ValidationException::withMessages([
+                'system_error' => ['System error!', $e->getMessage()],
+            ]);
+            throw $error;
+        }
 }
 
 
     /**
      * Display the specified resource.
      */
-    public function show(ModuleStudents $moduleStudents)
+    public function show(ModuleStudents $moduleStudents, $id)
     {
-        //
-        $modules = ModuleBahasa::All();
-        return view('users.dashboard_user',[
+        // Cari data ModuleStudents berdasarkan ID
+        $moduleStudents = ModuleStudents::where('id', $id)->first();
+
+        // Jika data tidak ditemukan, lemparkan 404
+        if (!$moduleStudents) {
+            abort(404, 'Data tidak ditemukan.');
+        }
+
+        // Pastikan hanya user dengan user_id yang sama yang dapat mengakses
+        if ($moduleStudents->user_id !== auth()->id()) {
+            abort(403, 'Anda tidak memiliki izin untuk mengakses data ini.');
+        }
+
+        // Mendapatkan kategori dari ModuleStudents
+        $categoryId = $moduleStudents->categories_id;
+
+        // Mengambil modul dengan kategori yang sama
+        $modules = ModuleBahasa::where('categories_id', $categoryId)->get();
+
+        return view('users.dashboard_user', [
             'modules' => $modules,
         ]);
-    }
+}
+
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(ModuleStudents $moduleStudents)
     {
-        //
+        
+        $categories = Category::all();
+        return view('users.pilih-bahasa.edit', [
+            'moduleStudents' => $moduleStudents,
+            'categories'=> $categories
+        ]);
     }
 
     /**
@@ -111,8 +119,55 @@ class ModuleStudentController extends Controller
      */
     public function update(Request $request, ModuleStudents $moduleStudents)
     {
-        //
+       
+        // Validasi input
+        $request->validate([
+            'categories_id' => 'required|exists:categories,id', // Pastikan kategori valid
+        ]);
+
+        // Ambil kategori yang dipilih
+        $category = Category::findOrFail($request->categories_id);
+
+        // Mulai transaksi database
+        DB::beginTransaction();
+
+        try {
+            // Cek apakah sudah ada data module_students dengan user_id DAN categories_id yang sama
+            $existingModuleStudent = ModuleStudents::where('user_id', auth()->id())
+                ->where('categories_id', $category->id)
+                ->first();
+    
+            if ($existingModuleStudent) {
+                // Jika data dengan user_id dan categories_id yang sama ditemukan, update data
+                $existingModuleStudent->update([
+                    'categories_id' => $category->id, // Update jika diperlukan
+                ]);
+            } else {
+                // Jika data tidak ditemukan, buat data baru
+                $moduleStudents=ModuleStudents::create([
+                    'user_id' => auth()->id(),
+                    'categories_id' => $category->id,
+                ]);
+            }
+
+            // Commit transaksi jika berhasil
+            DB::commit();
+
+            // Redirect ke halaman tertentu dengan pesan sukses
+            return redirect()->route('user.dashboard', ['id' => $moduleStudents->id])->with('success', 'Data berhasil disimpan!');
+        } catch (\Exception $e) {
+            // Rollback transaksi jika terjadi error
+            DB::rollBack();
+             // Debug error: Menyimpan pesan error untuk membantu debugging
+            \Log::error('Error saat menyimpan module_students: ' . $e->getMessage());
+    
+            return back()->withErrors([
+                'system_error' => 'Terjadi kesalahan pada sistem. Silakan coba lagi. Error: ' . $e->getMessage(),
+            ]);
+        }
+        
     }
+
 
     /**
      * Remove the specified resource from storage.

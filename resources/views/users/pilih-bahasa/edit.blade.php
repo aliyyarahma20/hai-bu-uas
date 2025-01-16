@@ -16,14 +16,24 @@
 <body class="bg-gray-100 flex justify-center items-center min-h-screen relative">
 
     <div class="relative w-full max-w-4xl bg-white shadow-lg rounded-lg overflow-hidden flex">
+        @if ($errors->any())
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li class="py-5 px-5 bg-red-700 text-white">
+                    {{ $error }}
+                </li>
+                @endforeach
+            </ul>
+        @endif
 
         <!-- Bagian Kiri: Pilihan Bahasa -->
         <div class="w-1/2 bg-[#4B5945] text-white p-8">
-            <form action="{{ route('pilih.bahasa.store') }}" method="POST">
+            <form action="{{ route('pilih.bahasa.update', ['moduleStudents' => $moduleStudents->id]) }}" method="POST">
                 @csrf
+                @method('PUT')
                 <div class="max-w-md mx-auto space-y-6">
                     <div class="space-y-6">
-                        <p class="text-lg font-medium text-center text-neutral-300">Pilih Bahasa</p>
+                        <p class="text-lg font-medium text-center text-neutral-300">Selamat Datang Kembali</p>
                         <div class="relative space-y-8 pt-2">
                             @forelse($categories as $category)
                             <label class="font-semibold flex items-center gap-[10px]">
