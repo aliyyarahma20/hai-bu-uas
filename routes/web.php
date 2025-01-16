@@ -39,25 +39,27 @@ Route::get('/dashboard', function () {
     if ($user->hasRole('admin')) {
         return redirect()->route('dashboard.module-bahasa.index');
     } elseif ($user->hasRole('student')) {
-        return redirect()->route('user.dashboard');
+        return redirect()->route('pilih-bahasa');
     }
 
     return redirect('/'); // Default redirect jika role tidak terdefinisi
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// Route pilih bahasa setelah regristasi
+Route::get('dashboard/pilih-bahasa', [ModuleStudentController::class, 'index'])->name('pilih-bahasa');
+Route::post('pilih-bahasa', [ModuleStudentController::class, 'store'])->name('pilih.bahasa.store');    
+
+
+Route::get('dashboard/pilih-bahasa/{moduleStudents}', [ModuleStudentController::class, 'edit'])->name('pilih.bahasa.edit');
+Route::put('dashboard/pilih-bahasa/{moduleStudents}', [ModuleStudentController::class, 'update'])->name('pilih.bahasa.update');
+
 
 
 // User Dashboard
-Route::get('/user/dashboard', [ModuleStudentController::class, 'show'])->middleware(['auth', 'role:student'])->name('user.dashboard');
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    Route::get('/pilih-bahasa', [ModuleStudentController::class, 'index'])->name('pilih-bahasa');
-    Route::get('/pilih-bahasa', [ModuleStudentController::class, 'create'])->name('pilih.bahasa.create');
-    Route::post('/pilih-bahasa', [ModuleStudentController::class, 'store'])->name('pilih.bahasa.store');
 
     Route::middleware(['auth'])->group(function () {
         // View route
@@ -98,21 +100,7 @@ Route::middleware('auth')->group(function () {
         // Route data kamus
         Route::resource('kamus', KamusController::class)
         ->middleware('role:admin');
-
-        
     
-
-        Route::get('/module-bahasa/students/show/{module-bahasa}', [ModuleStudentController::class, 'index'])
-        ->middleware('role:admin')
-        ->name('module-bahasa-students.index');
-
-        Route::get('/module-bahasa/students/create/{module-bahasa}', [ModuleStudentController::class, 'create'])
-        ->middleware('role:admin')
-        ->name('module-bahasa.students.create');
-
-        Route::post('/module-bahasa/students/save/{module-bahasa}', [ModuleStudentController::class, 'store'])
-        ->middleware('role:admin')
-        ->name('module-bahasa.students.store');
 
         Route::get('/dashboard', [LearningController::class, 'index'])->name('dashboard');
       
