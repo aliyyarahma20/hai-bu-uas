@@ -177,6 +177,49 @@ class ModuleStudentController extends Controller
     }
 
 
+    public function showModules(ModuleStudents $moduleStudents, Request $request, $id)
+    {
+        // Cari data ModuleStudents berdasarkan ID
+        $moduleStudents = ModuleStudents::where('id', $id)->first();
+
+        // Jika data tidak ditemukan, lemparkan 404
+        if (!$moduleStudents) {
+            abort(404, 'Data tidak ditemukan.');
+        }
+
+        // Pastikan hanya user dengan user_id yang sama yang dapat mengakses
+        if ($moduleStudents->user_id !== auth()->id()) {
+            abort(403, 'Anda tidak memiliki izin untuk mengakses data ini.');
+        }
+
+        // Mendapatkan kategori dari ModuleStudents
+        $categoryId = $moduleStudents->categories_id;
+
+        // Mengambil modul dengan kategori yang sama
+        $modules = ModuleBahasa::where('categories_id', $categoryId)->get();
+
+        return view('users.modul.index', [
+            'modules' => $modules,
+            'moduleStudentId' => $moduleStudents->id, // Kirim ID untuk digunakan di LearningController
+            'user' => $request->user(),
+        ]);
+    }
+
+
+    public function showKamus(ModuleStudents $moduleStudents, $id, Request $request)
+    {
+        $moduleStudents = ModuleStudents::where('id', $id)->first();
+
+        $kamus = Kamus::orderBy('id', 'DESC')->get();
+        return view('users.dictionary.index', [
+            'kamus' => $kamus,
+            'moduleStudentId' => $moduleStudents->id,
+            'user' => $request->user()
+        ]);
+    }
+    
+
+
     /**
      * Remove the specified resource from storage.
      */
