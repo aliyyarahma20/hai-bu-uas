@@ -55,7 +55,18 @@
                 </div>
             </div>
         </div>
+        @if (session('success'))
+            <div id="notification" class="fixed top-20 right-5 bg-[#91AC8F] text-white px-4 py-3 rounded-lg shadow-lg flex items-center space-x-4">
+                <span>{{ session('success') }}</span>
+                <button onclick="hideNotification()" class="text-white font-bold">OK</button>
+            </div>
 
+            <script>
+                function hideNotification() {
+                    document.getElementById('notification').style.display = 'none';
+                }
+            </script>
+        @endif
         <!-- Profile Button -->
         <div class="relative">
             <button id="profileButton" onclick="toggleDropdown('profileDropdown')" 
@@ -67,12 +78,19 @@
             <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg z-50">
                 <div class="p-6">
                     <div class="flex flex-col items-center gap-4">
-                        <img src="{{ $user->photos ? asset('storage/' . $user->photos) : asset('image/profile.jpg') }}" alt="Profile" class="w-24 h-24 rounded-full object-cover" />
                         <div class="space-y-4 w-full">
-                            <form method="post" action="{{ route('profile.update') }}" class="space-y-4">
+                            <form method="post" enctype="multipart/form-data" action="{{  route('dashboard.user.update', $user) }}" class="space-y-4">
                                 @csrf
                                 @method('patch')
-
+                                <div class="flex flex-col items-center gap-4">
+                                    <input type="file" name="photos" id="icon" class="peer hidden" onchange="previewFile()" data-empty="true">
+                                    <div class="file-preview">
+                                    <img src="{{ $user->photos ? asset('storage/' . $user->photos) : asset('image/profile.jpg') }}" alt="Profile" class="thumbnail-icon w-24 h-24 rounded-full object-cover" />
+                                    </div>
+                                    <button type="button" class="flex shrink-0 p-[8px_20px] h-fit items-center rounded-full bg-[#91AC8F] font-semibold text-white hover:bg-[#66785F]" onclick="document.getElementById('icon').click()">
+                                        Ubah Foto
+                                    </button>
+                                </div>
                                 <div>
                                     <label class="text-sm text-gray-600" for="name">Nama</label>
                                     <input id="name" name="name" type="text" class="w-full p-2 border rounded-lg" 
@@ -132,6 +150,7 @@
     </div>
 </div>
 
+
 <script>
     function toggleDropdown(id) {
         const dropdown = document.getElementById(id);
@@ -142,4 +161,19 @@
         const passwordForm = document.getElementById('passwordForm');
         passwordForm.classList.toggle('hidden');
     }
+
+    function previewFile() {
+        const preview = document.querySelector('.thumbnail-icon'); 
+        const file = document.querySelector('#icon').files[0]; 
+        const reader = new FileReader();
+
+        reader.onloadend = function () {
+            preview.src = reader.result;
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+
 </script>

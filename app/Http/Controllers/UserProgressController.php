@@ -81,7 +81,13 @@ class UserProgressController extends Controller
             $user->update($validated);
 
             DB::commit();
-            return redirect()->route('dashboard.user.index')->with('success', 'User updated successfully.');
+            
+            if ($user->hasRole('admin')) {
+                return redirect()->route('dashboard.user.index')->with('success', 'User updated successfully.');
+            } else {
+                return back()->with('success', 'Berhasil edit profile.');
+            }
+
         } catch (\Exception $e) {
             DB::rollBack();
             $error = ValidationException::withMessages([
