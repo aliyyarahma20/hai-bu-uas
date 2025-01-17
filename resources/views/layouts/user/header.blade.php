@@ -74,7 +74,7 @@
                                 @method('patch')
 
                                 <div>
-                                    <label class="text-sm text-gray-600" for="name">Name</label>
+                                    <label class="text-sm text-gray-600" for="name">Nama</label>
                                     <input id="name" name="name" type="text" class="w-full p-2 border rounded-lg" 
                                         value="{{ old('name', $user->name) }}" required autofocus autocomplete="name" />
                                 </div>
@@ -92,7 +92,7 @@
 
                             <button id="changePasswordButton" onclick="togglePasswordForm()" 
                                     class="w-full py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300">
-                                Ganti Password
+                                Ganti Kata Sandi
                             </button>
 
                             <!-- Password Form (Hidden by Default) -->
@@ -102,19 +102,19 @@
                                     @method('put')
 
                                     <div>
-                                        <label class="text-sm text-gray-600" for="current_password">Current Password</label>
+                                        <label class="text-sm text-gray-600" for="current_password">Kata Sandi Saat Ini</label>
                                         <input id="current_password" name="current_password" type="password" 
                                             class="w-full p-2 border rounded-lg" autocomplete="current-password" />
                                     </div>
 
                                     <div>
-                                        <label class="text-sm text-gray-600" for="password">New Password</label>
+                                        <label class="text-sm text-gray-600" for="password">Kata Sandi Baru</label>
                                         <input id="password" name="password" type="password" 
                                             class="w-full p-2 border rounded-lg" autocomplete="new-password" />
                                     </div>
 
                                     <div>
-                                        <label class="text-sm text-gray-600" for="password_confirmation">Confirm Password</label>
+                                        <label class="text-sm text-gray-600" for="password_confirmation">Konfirmasi Kata Sandi</label>
                                         <input id="password_confirmation" name="password_confirmation" type="password" 
                                             class="w-full p-2 border rounded-lg" autocomplete="new-password" />
                                     </div>

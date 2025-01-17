@@ -48,10 +48,21 @@
                 </div>
 
                 <!-- Content Cards -->
-                <div class="flex justify-center">
+                <div class="flex flex-col items-center">
                     <!-- Single Centered Card -->
                     <div class="rounded-2xl text-[#4B5945] border-2 border-[#4B5945] p-8 w-full max-w-[850px]">
                         {!! nl2br(e($module->description)) !!}
+                    </div>
+
+                    <!-- Container untuk button -->
+                    <div class="w-full max-w-[850px] flex justify-center">
+                        <a href="#" 
+                        class="mt-2 px-6 py-2 bg-[#4B5945] text-white text-sm rounded-full hover:bg-[#3d483c] transition-colors duration-200 flex items-center justify-center gap-2">
+                            Mulai Kuis
+                            <svg width="16" height="16" viewBox="0 0 24 24" class="text-white">
+                                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            </svg>
+                        </a>
                     </div>
                 </div>
                 @endforeach

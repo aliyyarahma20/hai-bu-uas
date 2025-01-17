@@ -16,26 +16,36 @@
 $colors = ['bg-[#4B5945]', 'bg-[#66785F]', 'bg-[#B2C9AD]'];
 @endphp
 
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-    @forelse ($modules as $index => $modul)
-    <a href="{{ route('dashboard.learning.index', ['moduleId' => $modul->id, 'module_student_id' => $moduleStudentId]) }}) }}" 
-    class="w-full text-left {{ $colors[$index % count($colors)] }} rounded-xl p-6 transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#91AC8F]">
-        <h3 class="text-white font-semibold">Modul {{$index + 1}}:</h3>
-        <p class="text-white mb-4">{{$modul->nama}}</p>
-        <div class="w-full bg-white/20 rounded-full h-2">
-            <div class="bg-white rounded-full h-2 transition-all duration-500" style="width: 70%"></div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        @forelse ($modules as $index => $modul)
+        <a href="{{ route('dashboard.learning.index', ['moduleId' => $modul->id, 'module_student_id' => $moduleStudentId]) }}" 
+        class="w-full text-left {{ $colors[$index % count($colors)] }} rounded-xl p-6 transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#91AC8F] flex items-center gap-4">
+            <!-- Container foto bulat -->
+            <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center">
+                <img src="{{Storage::url($modul->cover)}}" 
+                    alt="Module icon" 
+                    class="w-16 h-16 object-cover rounded-full" /> <!-- Ubah ukuran gambar -->
+            </div>
+            
+            <!-- Konten modul -->
+            <div class="flex-1 flex flex-col justify-center">
+                <h3 class="text-white font-semibold text-lg mb-1">Modul {{$index + 1}}:</h3>
+                <p class="text-white/90">{{$modul->nama}}</p>
+            </div>
+        </a>
+        @empty
+        <div class="col-span-3 text-center py-8 text-gray-500">
+            Tidak ada modul tersedia
         </div>
-    </a>
-    @empty
-    @endforelse
-</div>
+        @endforelse
+    </div>
 
 <!-- Quiz Section -->
 <div class="bg-white rounded-xl p-6 mb-8 flex justify-between items-center">
     <div>
-        <h3 class="text-[#4B5945] font-semibold mb-2">Bahasa dengan jumlah penutur terbesar di Indonesia,<br/>dengan lebih dari 80 juta penutur</h3>
+        <h3 class="text-[#4B5945] font-semibold mb-2">Ayo tunjukkan cinta pada nusantara,<br/>dengan terus melestarikan ribuan bahasa daerahnya</h3>
     </div>
-    <img src="/api/placeholder/150/150" alt="Quiz illustration" class="h-24 w-auto"/>
+    <img src="{{asset('image/learning.png')}}" alt="Quiz illustration" class="h-24 w-auto"/>
 </div>
 
 <!-- Dictionary Section -->
