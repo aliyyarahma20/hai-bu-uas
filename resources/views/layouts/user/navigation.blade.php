@@ -1,4 +1,4 @@
-// resources/views/layouts/user/navigation.blade.php
+
 @php
     $routePrefix = request()->route()->getPrefix();
     $routeName = request()->route()->getName();

@@ -49,8 +49,8 @@ class AuthenticatedSessionController extends Controller
 
         // Periksa role pengguna
         if ($user->hasRole('admin')) {
-            // Jika role admin, arahkan ke RouteServiceProvider::HOME
-            return redirect()->intended(RouteServiceProvider::HOME);
+            // Jika role admin, arahkan ke dashboard admin
+            return redirect()->route('dashboard.module-bahasa.index');
         }
 
         // Logika untuk pengguna non-admin

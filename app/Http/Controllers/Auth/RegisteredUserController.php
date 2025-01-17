@@ -62,7 +62,14 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+  
+        if ($user->hasRole('admin')) {
+            return redirect()->route('dashboard.module-bahasa.index');
+        } elseif ($user->hasRole('student')) {
+            return redirect()->route('pilih-bahasa');
+        }
+
+        // return redirect(RouteServiceProvider::HOME);
 
         
     }
