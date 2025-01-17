@@ -28,12 +28,7 @@
                         </div>
                         <p class="font-semibold">{{\Carbon\Carbon::parse($moduleBahasa->created_at)->format('F j, Y')}}</p>
                     </div>
-                    <div class="flex gap-[10px] items-center">
-                        <div class="w-6 h-6 flex shrink-0">
-                            <img src="{{asset('images/icons/profile-2user-outline.svg')}}" alt="icon">
-                        </div>
-                        <p class="font-semibold">{{{count($students)}}}</p>
-                    </div>
+                    
                 </div>
             </div>
         </div>

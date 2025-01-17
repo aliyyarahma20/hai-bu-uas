@@ -75,13 +75,12 @@ class ModuleBahasaController extends Controller
     public function show(ModuleBahasa $moduleBahasa)
     {
         //
-        $students = $moduleBahasa->students()->orderBy('id', 'DESC')->get();
+        
         $questions = $moduleBahasa->question()->orderBy('id', 'DESC')->get();
 
 
         return view('admin.modul.manage', [
             'modules' => $moduleBahasa,
-            'students' => $students,
             'questions' => $questions,
         ]);
     }

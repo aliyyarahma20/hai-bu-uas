@@ -144,6 +144,9 @@ class ModuleStudentController extends Controller
                 $existingModuleStudent->update([
                     'categories_id' => $category->id, // Update jika diperlukan
                 ]);
+
+                $moduleStudents = $existingModuleStudent;
+                
             } else {
                 // Jika data tidak ditemukan, buat data baru
                 $moduleStudents=ModuleStudents::create([

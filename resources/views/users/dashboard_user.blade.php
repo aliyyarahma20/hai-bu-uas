@@ -23,8 +23,8 @@ $colors = ['bg-[#4B5945]', 'bg-[#66785F]', 'bg-[#B2C9AD]'];
             <!-- Container foto bulat -->
             <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center">
                 <img src="{{Storage::url($modul->cover)}}" 
-                    alt="Module icon" 
-                    class="w-16 h-16 object-cover rounded-full" /> <!-- Ubah ukuran gambar -->
+                alt="Module icon" 
+                class="w-16 h-16 object-cover rounded-full" /> <!-- Ubah ukuran gambar -->
             </div>
             
             <!-- Konten modul -->
@@ -106,14 +106,14 @@ $colors = ['bg-[#4B5945]', 'bg-[#66785F]', 'bg-[#B2C9AD]'];
                             @forelse ($modules as $index => $modul)
                                 <a href="{{ route('dashboard.learning.index', $modul->id) }}" 
                                 class="text-[#4B5945] hover:text-[#2E3A2C] p-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                    </svg>
                                 </a>
                             @empty
                             @endforelse
                             
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
                             <!-- Delete Button -->
                             <form action="{{ route('bookmarks.destroy', $bookmark) }}" 
                                 method="POST" 

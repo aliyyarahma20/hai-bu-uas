@@ -25,11 +25,9 @@ class QuestionController extends Controller
     public function create(ModuleBahasa $moduleBahasa)
     {
         //
-        $students = $moduleBahasa->students()->orderBy('id', 'DESC')->get();
 
         return view('admin.kuis.create',[
             'moduleBahasa' => $moduleBahasa,
-            'students' => $students,
         ]);
     }
 
@@ -89,12 +87,12 @@ class QuestionController extends Controller
         //
         
         $moduleBahasa = $question->modulebahasa;
-        $students = $moduleBahasa->students()->orderBy('id', 'DESC')->get();
+ 
 
         return view('admin.kuis.edit', [
            'question' => $question, 
            'moduleBahasa' => $moduleBahasa,
-           'students' => $students,
+         
             
         ]);
     }
