@@ -7,18 +7,22 @@ use Illuminate\Http\Request;
 
 class LearningController extends Controller
 {
-    public function index($moduleId = null)
-    {
-        if ($moduleId) {
-            // Jika ada ID, wrap single object dalam collection
-            $modules = collect([ModuleBahasa::findOrFail($moduleId)]);
-        } else {
-            // Jika tidak ada ID, ambil semua
-            $modules = ModuleBahasa::all();
-        }
+    public function index(Request $request, $moduleId = null)
+{
+    $modules = $moduleId 
+        ? ModuleBahasa::where('id', $moduleId)->get() 
+        : ModuleBahasa::all();
 
-        return view('users.modul.learning', compact('modules'));
-    }
+    // Ambil module_student_id dari request atau parameter
+    $moduleStudentId = $request->get('module_student_id');
+
+    return view('users.modul.language-module', [
+        'modules' => $modules,
+        'moduleStudentId' => $moduleStudentId,
+    ]);
+}
+
+    
 }
 
 ?>

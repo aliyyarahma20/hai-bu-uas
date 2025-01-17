@@ -382,57 +382,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
-                    
-                    <!-- Search bar -->
-                    <div class="relative flex-1">
-                        <input type="text" 
-                            id="searchInput"
-                            placeholder="Apa yang kamu cari?" 
-                            class="w-full rounded-full bg-white px-4 py-2 shadow-sm 
-                                    border border-gray-200 
-                                    placeholder-gray-400
-                                    focus:outline-none focus:ring-2 focus:ring-[#4B5945] focus:border-transparent
-                                    transition-all duration-200"/>
-                        <button id="searchButton" 
-                                class="absolute right-3 top-1/2 -translate-y-1/2 
-                                    p-1 rounded-full
-                                    hover:bg-[#D1E9D1] 
-                                    transition-all duration-200 opacity-100">
-                            <svg xmlns="http://www.w3.org/2000/svg" 
-                                class="h-5 w-5 text-gray-400 hover:text-[#4B5945]" 
-                                fill="none" 
-                                viewBox="0 0 24 24" 
-                                stroke="currentColor">
-                                <path stroke-linecap="round" 
-                                    stroke-linejoin="round" 
-                                    stroke-width="2" 
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                            </svg>
-                        </button>
-                    </div>
-        
-                    <!-- Notification Button -->
-                    <div class="relative">
-                        <button id="notificationButton" onclick="toggleDropdown('notificationDropdown')" 
-                                class="p-2 text-[#4B5945] hover:text-white hover:bg-[#D1E9D1] rounded-lg focus:ring-2 focus:ring-[#4B5945] focus:text-white focus:bg-[#4B5945]">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                            </svg>
-                        </button>
-        
-                        <!-- Notification Dropdown -->
-                        <div id="notificationDropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg z-50">
-                            <div class="p-4">
-                                <h3 class="text-lg font-semibold mb-2">Notifikasi</h3>
-                                <div class="border-t pt-2">
-                                    <div class="text-sm text-gray-600 py-2">Belum ada notifikasi baru</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
         
                     <!-- Profile Button -->
-                    <div class="relative">
+                    <div class="relative justify-end">
                         <button id="profileButton" onclick="toggleDropdown('profileDropdown')" 
                                 class="h-10 w-10 overflow-hidden rounded-full focus:outline-none focus:ring-2 focus:ring-[#4B5945] focus:ring-offset-2 transition-all duration-200">
                             <img src="./image/jiwon.jpeg" alt="Profile" class="h-full w-full object-cover"/>
@@ -487,8 +439,8 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
                         @forelse ($modules as $index => $modul)
-                        <a href="{{ route('dashboard.learning.index', $modul->id) }}" 
-                        class="w-full text-left {{ $colors[$index % count($colors)] }} rounded-xl p-6 transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        <a href="{{ route('dashboard.learning.index', ['moduleId' => $modul->id, 'module_student_id' => $moduleStudentId]) }}) }}" 
+                        class="w-full text-left {{ $colors[$index % count($colors)] }} rounded-xl p-6 transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#91AC8F]">
                             <h3 class="text-white font-semibold">Modul {{$index + 1}}:</h3>
                             <p class="text-white mb-4">{{$modul->nama}}</p>
                             <div class="w-full bg-white/20 rounded-full h-2">
@@ -532,39 +484,6 @@
                         <learning-calendar></learning-calendar>
                     </div>
                     <script src="{{ mix('js/app.js') }}"></script>
-
-                    <!-- Leaderboard -->
-                    <div class="mt-8">
-                        <h3 class="text-[#4B5945] font-semibold mb-4">Pelajar Terbaik Minggu ini</h3>
-                        <div class="grid grid-cols-1 gap-3">
-                            <div class="bg-[#B2C9AD] rounded-xl p-4 flex justify-between items-center">
-                                <div class="flex items-center gap-3">
-                                    <img src="/api/placeholder/40/40" alt="Profile" class="w-10 h-10 rounded-full"/>
-                                    <span class="text-[#4B5945] font-medium">Rama Paramarta</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <span class="text-[#4B5945]">Poin: 1980</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="bg-[#F3F8F2] rounded-xl p-4 flex justify-between items-center">
-                                <div class="flex items-center gap-3">
-                                    <img src="/api/placeholder/40/40" alt="Profile" class="w-10 h-10 rounded-full"/>
-                                    <span class="text-[#4B5945] font-medium">Puti Andam</span>
-                                </div>
-                                <span class="text-[#4B5945]">Poin: 982</span>
-                            </div>
-                            <div class="bg-[#F3F8F2] rounded-xl p-4 flex justify-between items-center">
-                                <div class="flex items-center gap-3">
-                                    <img src="/api/placeholder/40/40" alt="Profile" class="w-10 h-10 rounded-full"/>
-                                    <span class="text-[#4B5945] font-medium">Sofea Maharani</span>
-                                </div>
-                                <span class="text-[#4B5945]">Poin: 890</span>
-                            </div>
-                        </div>
-                    </div>
 
                 <!-- SAVED -->
                 <div id="rightOverlay" class="fixed inset-0 z-30 bg-gray-900 bg-opacity-50 transition-opacity hidden" onclick="closeRightSidebar()"></div>
