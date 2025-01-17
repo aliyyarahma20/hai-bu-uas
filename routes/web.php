@@ -132,6 +132,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/bookmarks', [BookmarkController::class, 'store'])->name('bookmarks.store');
     Route::delete('/bookmarks/{bookmark}', [BookmarkController::class, 'destroy'])->name('bookmarks.destroy');
 
+    Route::get('/kamus/{id}', [KamusController::class, 'show'])->name('kamus.show');
     Route::get('/module/bahasa/{moduleBahasa}', [ModuleBahasaController::class, 'show'])
     ->name('module.bahasa.show');
 });

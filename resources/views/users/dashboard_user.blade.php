@@ -50,24 +50,51 @@ $colors = ['bg-[#4B5945]', 'bg-[#66785F]', 'bg-[#B2C9AD]'];
 
 <!-- Dictionary Section -->
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+    <!-- Kamus Bahasa Sunda - Indonesia -->
     <div class="bg-[#B2C9AD] rounded-xl p-6">
         <h3 class="text-white font-semibold mb-4">Kamus Bahasa<br/>Sunda - Indonesia</h3>
-        <button class="text-white">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-            </svg>
-        </button>
+        @if ($kamus->isNotEmpty())
+            @php
+                $sundaKamus = $kamus->where('categories_id', 1)->first(); // Asumsikan ID kategori 1 untuk Sunda
+            @endphp
+            @if ($sundaKamus)
+                <a href="{{ $sundaKamus->link }}" target="_blank">
+                    <button class="text-white">
+                        <svg class="w-6 h-6 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        Kunjungi
+                    </button>
+                </a>
+            @endif
+        @else
+            <p class="text-white">Tidak ada data untuk kategori ini.</p>
+        @endif
     </div>
 
+    <!-- Kamus Bahasa Jawa - Indonesia -->
     <div class="bg-[#4B5945] rounded-xl p-6">
-        <h3 class="text-white font-semibold mb-4">Kamus Bahasa<br/>Indonesia - Sunda</h3>
-        <button class="text-white">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-            </svg>
-        </button>
+        <h3 class="text-white font-semibold mb-4">Kamus Bahasa<br/>Jawa - Indonesia</h3>
+        @if ($kamus->isNotEmpty())
+            @php
+                $jawaKamus = $kamus->where('categories_id', 2)->first(); // Asumsikan ID kategori 2 untuk Jawa
+            @endphp
+            @if ($jawaKamus)
+                <a href="{{ $jawaKamus->link }}" target="_blank">
+                    <button class="text-white">
+                        <svg class="w-6 h-6 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        Kunjungi
+                    </button>
+                </a>
+            @endif
+        @else
+            <p class="text-white">Tidak ada data untuk kategori ini.</p>
+        @endif
     </div>
 </div>
+
 
 <div id="calendar-container">
     <learning-calendar></learning-calendar>

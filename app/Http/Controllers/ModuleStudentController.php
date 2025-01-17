@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\ModuleBahasa;
 use App\Models\ModuleStudents;
+use App\Models\Kamus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
@@ -78,6 +79,7 @@ class ModuleStudentController extends Controller
     {
         // Cari data ModuleStudents berdasarkan ID
         $moduleStudents = ModuleStudents::where('id', $id)->first();
+        $kamus = Kamus::orderBy('id', 'DESC')->get();
 
         // Jika data tidak ditemukan, lemparkan 404
         if (!$moduleStudents) {
@@ -99,6 +101,7 @@ class ModuleStudentController extends Controller
             'modules' => $modules,
             'moduleStudentId' => $moduleStudents->id, // Kirim ID untuk digunakan di LearningController
             'user' => $request->user(),
+            'kamus' => $kamus,
         ]);
 }
 
