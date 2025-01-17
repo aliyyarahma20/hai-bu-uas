@@ -56,6 +56,14 @@ Route::put('dashboard/pilih-bahasa/{moduleStudents}', [ModuleStudentController::
 // User Dashboard
 Route::get('/user/dashboard/{id}', [ModuleStudentController::class, 'show'])->middleware(['auth', 'role:student'])->name('user.dashboard');
 
+Route::get('/user/modules/{id}', [ModuleStudentController::class, 'showModules'])
+    ->middleware('role:student')
+    ->name('user.modules');
+
+Route::get('/user/kamus', [ModuleStudentController::class, 'showKamus'])
+->middleware('role:student')
+->name('user.kamus');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -101,6 +109,7 @@ Route::middleware('auth')->group(function () {
         // Route data kamus
         Route::resource('kamus', KamusController::class)
         ->middleware('role:admin');
+
     
 
         Route::get('/dashboard', [LearningController::class, 'index'])->name('dashboard');
