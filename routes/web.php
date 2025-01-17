@@ -103,17 +103,14 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:admin');
 
         // Route untuk data pengguna
-        Route::resource('user', UserProgressController::class)
-        ->middleware('role:admin');
+        Route::resource('user', UserProgressController::class);
 
         // Route data kamus
         Route::resource('kamus', KamusController::class)
         ->middleware('role:admin');
 
-    
 
         Route::get('/dashboard', [LearningController::class, 'index'])->name('dashboard');
-      
 
         Route::get('/learning/finished/{module-bahasa}', [LearningController::class, 'learning_finished'])
         ->middleware('role:student')
