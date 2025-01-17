@@ -22,4 +22,9 @@ class Bookmark extends Model
     {
         return $this->belongsTo(ModuleBahasa::class,'module_bahasa_id');
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'categories_id');
+    }
 }

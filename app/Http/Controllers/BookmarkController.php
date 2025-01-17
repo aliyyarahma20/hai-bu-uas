@@ -10,7 +10,18 @@ class BookmarkController extends Controller
 {
     public function index()
     {
-        $bookmarks = auth()->user()->bookmarks()->with('moduleBahasa')->latest()->get();
+        // Ambil kategori dari user yang sedang login
+        $userCategory = auth()->user()->category_id;
+        
+        $bookmarks = auth()->user()->bookmarks()
+            ->with('moduleBahasa')
+            ->whereHas('moduleBahasa', function($query) use ($userCategory) {
+                $query->where('categories_id', $userCategory);
+            })
+
+            ->latest()
+            ->get();
+            
         return view('bookmarks.index', compact('bookmarks'));
     }
 
@@ -20,6 +31,13 @@ class BookmarkController extends Controller
             'module_bahasa_id' => 'required|exists:module_bahasas,id',
             'title' => 'required|string|max:255',
         ]);
+        
+        $userCategory = auth()->user()->category_id;
+
+        $moduleBahasa = ModuleBahasa::find($request->module_bahasa_id);
+        if ($moduleBahasa->category_id !== $userCategory) {
+            return redirect()->back()->with('error', 'Anda tidak memiliki akses ke modul ini.');
+        }
 
         try {
             auth()->user()->bookmarks()->create($validated);

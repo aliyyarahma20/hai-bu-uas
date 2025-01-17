@@ -26,7 +26,7 @@
             :class="getDayClass(weekDates[index])"
             @click="markDay(weekDates[index])"
           >
-            {{ weekDates[index].getDate() }}
+            {{ weekDates[index].getUTCDate() }}
           </div>
         </div>
       </div>
@@ -52,13 +52,12 @@ export default {
   computed: {
     weekDates() {
       const dates = [];
-      const currentDay = this.currentDate.getDay();
-      const startDate = new Date(this.currentDate);
-      startDate.setDate(this.currentDate.getDate() - currentDay);
+      const currentDay = this.currentDate.getUTCDay();
+      const startDate = new Date(Date.UTC(this.currentDate.getUTCFullYear(), this.currentDate.getUTCMonth(), this.currentDate.getUTCDate() - currentDay));
 
       for (let i = 0; i < 7; i++) {
         const date = new Date(startDate);
-        date.setDate(startDate.getDate() + i);
+        date.setUTCDate(startDate.getUTCDate() + i);
         dates.push(date);
       }
 
@@ -69,6 +68,7 @@ export default {
       return this.currentDate.toLocaleDateString("id-ID", {
         month: "long",
         year: "numeric",
+        timeZone: "UTC",
       });
     },
   },
@@ -76,25 +76,25 @@ export default {
   methods: {
     handlePrevWeek() {
       const newDate = new Date(this.currentDate);
-      newDate.setDate(newDate.getDate() - 7);
+      newDate.setUTCDate(newDate.getUTCDate() - 7);
       this.currentDate = newDate;
     },
 
     handleNextWeek() {
       const newDate = new Date(this.currentDate);
-      newDate.setDate(newDate.getDate() + 7);
+      newDate.setUTCDate(newDate.getUTCDate() + 7);
       this.currentDate = newDate;
     },
 
     formatDate(date) {
       const d = new Date(date);
-      return d.toISOString().split("T")[0];
+      return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, "0")}-${String(d.getUTCDate()).padStart(2, "0")}`;
     },
 
     getDayNameClass(index) {
       const today = new Date();
       return {
-        "text-[#4B5945]": index === today.getDay(),
+        "text-[#4B5945]": index === today.getUTCDay(),
       };
     },
 
@@ -117,16 +117,14 @@ export default {
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/user-activities");
         const data = response.data;
-        
-        // Mengambil semua tanggal kunjungan
-        const uniqueDates = [...new Set(data.map(activity => activity.visit_date))].sort();
+
+        const uniqueDates = [...new Set(data.map(activity => this.formatDate(activity.visit_date)))].sort();
         this.visitedDates = uniqueDates;
-        
-        // Mengambil tanggal kunjungan terakhir
-        if (data.length > 0) {
-          this.lastVisitDate = data[data.length - 1].visit_date;
+
+        if (uniqueDates.length > 0) {
+          this.lastVisitDate = uniqueDates[uniqueDates.length - 1];
         }
-        
+
         this.calculateStreak(uniqueDates);
       } catch (error) {
         console.error("Error dalam mengambil data streak:", error);
@@ -140,7 +138,11 @@ export default {
         return;
       }
 
-      const datesToCheck = dates.map(date => new Date(date));
+      const datesToCheck = dates.map(date => {
+        const d = new Date(date);
+        return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
+      });
+
       datesToCheck.sort((a, b) => a - b);
 
       let currentStreak = [this.formatDate(datesToCheck[0])];
@@ -149,8 +151,8 @@ export default {
         const prevDate = datesToCheck[i - 1];
         const currDate = datesToCheck[i];
 
-        const diffTime = Math.abs(currDate - prevDate);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        const diffTime = currDate - prevDate;
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
         if (diffDays === 1) {
           currentStreak.push(this.formatDate(currDate));
@@ -165,16 +167,13 @@ export default {
 
     async markDay(date) {
       const formattedDate = this.formatDate(date);
-      
+
       try {
         await axios.post("http://127.0.0.1:8000/api/user-activities", {
           visit_date: formattedDate,
         });
-        
-        // Update lastVisitDate setelah berhasil marking
+
         this.lastVisitDate = formattedDate;
-        
-        // Refresh data
         await this.fetchStreakData();
       } catch (error) {
         console.error("Error saat menambahkan aktivitas:", error);
@@ -189,7 +188,7 @@ export default {
   watch: {
     currentDate() {
       this.fetchStreakData();
-    }
-  }
+    },
+  },
 };
 </script>

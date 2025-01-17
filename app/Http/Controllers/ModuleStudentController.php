@@ -97,6 +97,7 @@ class ModuleStudentController extends Controller
 
         return view('users.dashboard_user', [
             'modules' => $modules,
+            'moduleStudentId' => $moduleStudents->id, // Kirim ID untuk digunakan di LearningController
         ]);
 }
 
