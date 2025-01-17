@@ -74,7 +74,7 @@ class ModuleStudentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ModuleStudents $moduleStudents, $id)
+    public function show(ModuleStudents $moduleStudents, $id, Request $request)
     {
         // Cari data ModuleStudents berdasarkan ID
         $moduleStudents = ModuleStudents::where('id', $id)->first();
@@ -98,6 +98,7 @@ class ModuleStudentController extends Controller
         return view('users.dashboard_user', [
             'modules' => $modules,
             'moduleStudentId' => $moduleStudents->id, // Kirim ID untuk digunakan di LearningController
+            'user' => $request->user(),
         ]);
 }
 

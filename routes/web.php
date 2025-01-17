@@ -31,27 +31,27 @@ Route::get('/', function () {
     return view('landingpage');
 })->name('landingpage');
 
-Route::get('/dashboard', function () {
+// Route::get('/dashboard', function () {
 
-    /** @var \App\Models\User */
-    $user = auth()->user(); 
+//     /** @var \App\Models\User */
+//     $user = auth()->user(); 
     
-    if ($user->hasRole('admin')) {
-        return redirect()->route('dashboard.module-bahasa.index');
-    } elseif ($user->hasRole('student')) {
-        return redirect()->route('pilih-bahasa');
-    }
+//     if ($user->hasRole('admin')) {
+//         return redirect()->route('dashboard.module-bahasa.index');
+//     } elseif ($user->hasRole('student')) {
+//         return redirect()->route('pilih-bahasa');
+//     }
 
-    return redirect('/'); // Default redirect jika role tidak terdefinisi
-})->middleware(['auth', 'verified'])->name('dashboard');
+//     return redirect('/'); // Default redirect jika role tidak terdefinisi
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Route pilih bahasa setelah regristasi
-Route::get('dashboard/pilih-bahasa', [ModuleStudentController::class, 'index'])->name('pilih-bahasa');
-Route::post('pilih-bahasa', [ModuleStudentController::class, 'store'])->name('pilih.bahasa.store');    
+Route::get('dashboard/pilih-bahasa', [ModuleStudentController::class, 'index'])->middleware('auth')->name('pilih-bahasa');
+Route::post('pilih-bahasa', [ModuleStudentController::class, 'store'])->middleware('auth')->name('pilih.bahasa.store');    
 
+Route::get('dashboard/pilih-bahasa/{moduleStudents}', [ModuleStudentController::class, 'edit'])->middleware('auth')->name('pilih.bahasa.edit');
+Route::put('dashboard/pilih-bahasa/{moduleStudents}', [ModuleStudentController::class, 'update'])->middleware('auth')->name('pilih.bahasa.update');
 
-Route::get('dashboard/pilih-bahasa/{moduleStudents}', [ModuleStudentController::class, 'edit'])->name('pilih.bahasa.edit');
-Route::put('dashboard/pilih-bahasa/{moduleStudents}', [ModuleStudentController::class, 'update'])->name('pilih.bahasa.update');
 
 // User Dashboard
 Route::get('/user/dashboard/{id}', [ModuleStudentController::class, 'show'])->middleware(['auth', 'role:student'])->name('user.dashboard');
