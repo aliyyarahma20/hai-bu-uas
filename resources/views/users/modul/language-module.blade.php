@@ -27,11 +27,40 @@
                     </div>
 
                     <!-- Right Side: Bookmark Button -->
-                    <button class="w-10 h-10 rounded-full bg-[#4B5945] flex items-center justify-center">
-                        <svg width="16" height="16" viewBox="0 0 24 24" class="text-white">
-                            <path d="M19 21L12 16L5 21V5C5 4.46957 5.21071 3.96086 5.58579 3.58579C5.96086 3.21071 6.46957 3 7 3H17C17.5304 3 18.0391 3.21071 18.4142 3.58579C18.7893 3.96086 19 4.46957 19 5V21Z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </button>
+                    @foreach ($modules as $module)
+                    @if ($module->isBookmarkedByUser(auth()->id()))  <!-- Jika modul sudah dibookmark -->
+                        <form action="{{ route('bookmarks.destroy', $module->bookmarks->first()) }}" method="POST" style="display: inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="bookmark-btn w-10 h-10 rounded-full bg-[#4B5945] flex items-center justify-center">
+                                <svg width="16" height="16" viewBox="0 0 24 24" class="text-white">
+                                    <path d="M19 21L12 16L5 21V5C5 4.46957 5.21071 3.96086 5.58579 3.58579C5.96086 3.21071 6.46957 3 7 3H17C17.5304 3 18.0391 3.21071 18.4142 3.58579C18.7893 3.96086 19 4.46957 19 5V21Z" 
+                                        stroke="currentColor" 
+                                        fill="currentColor" 
+                                        stroke-width="2" 
+                                        stroke-linecap="round" 
+                                        stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </form>
+                    @else  <!-- Jika modul belum dibookmark -->
+                        <form action="{{ route('bookmarks.store') }}" method="POST" style="display: inline;">
+                            @csrf
+                            <input type="hidden" name="module_bahasa_id" value="{{ $module->id }}">
+                            <input type="hidden" name="title" value="{{ $module->nama }}">
+                            <button type="submit" class="bookmark-btn w-10 h-10 rounded-full bg-[#4B5945] flex items-center justify-center">
+                                <svg width="16" height="16" viewBox="0 0 24 24" class="text-white">
+                                    <path d="M19 21L12 16L5 21V5C5 4.46957 5.21071 3.96086 5.58579 3.58579C5.96086 3.21071 6.46957 3 7 3H17C17.5304 3 18.0391 3.21071 18.4142 3.58579C18.7893 3.96086 19 4.46957 19 5V21Z" 
+                                        stroke="currentColor" 
+                                        fill="none" 
+                                        stroke-width="2" 
+                                        stroke-linecap="round" 
+                                        stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </form>
+                    @endif
+                @endforeach
                 </div>
 
                 <!-- Module Title -->
@@ -55,7 +84,7 @@
                     </div>
 
                     <!-- Container untuk button -->
-                    <div class="w-full max-w-[850px] flex justify-center">
+                    <!-- <div class="w-full max-w-[850px] flex justify-center">
                         <a href="#" 
                         class="mt-2 px-6 py-2 bg-[#4B5945] text-white text-sm rounded-full hover:bg-[#3d483c] transition-colors duration-200 flex items-center justify-center gap-2">
                             Mulai Kuis
@@ -63,7 +92,7 @@
                                 <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
                             </svg>
                         </a>
-                    </div>
+                    </div> -->
                 </div>
                 @endforeach
             </div>

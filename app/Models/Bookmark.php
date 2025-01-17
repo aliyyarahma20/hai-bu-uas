@@ -27,4 +27,15 @@ class Bookmark extends Model
     {
         return $this->belongsTo(Category::class, 'categories_id');
     }
+
+    public function isBookmarkedByUser($userId)
+    {
+        return $this->bookmarks()->where('user_id', $userId)->exists();
+    }
+
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class, 'module_bahasa_id');
+    }
+
 }
