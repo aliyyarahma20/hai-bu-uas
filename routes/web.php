@@ -60,7 +60,7 @@ Route::get('/user/modules/{id}', [ModuleStudentController::class, 'showModules']
     ->middleware('role:student')
     ->name('user.modules');
 
-Route::get('/user/kamus', [ModuleStudentController::class, 'showKamus'])
+Route::get('/user/kamus/{id}', [ModuleStudentController::class, 'showKamus'])
 ->middleware('role:student')
 ->name('user.kamus');
 

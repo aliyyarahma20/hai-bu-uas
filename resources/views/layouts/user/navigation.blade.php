@@ -22,7 +22,7 @@
     Modules
 </a>
 
-<a href="{{ route('user.kamus')}} "
+<a href=" {{ route('user.kamus', ['id' => $moduleStudentId]) }} "
    class="flex cursor-pointer items-center py-3 px-4 text-sm font-medium 
    {{ request()->routeIs('user.kamus') ? 'text-[#4B5945] border-l-4 border-l-[#4B5945] bg-[#F3F8F2]' : 'text-gray-600 hover:text-[#4B5945] hover:border-l-4 hover:border-l-[#4B5945]' }}">
     <svg class="mr-4 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

@@ -206,10 +206,16 @@ class ModuleStudentController extends Controller
     }
 
 
-    public function showKamus(ModuleStudents $moduleStudents)
+    public function showKamus(ModuleStudents $moduleStudents, $id, Request $request)
     {
-        //
-        return view('users.dictionary.index');
+        $moduleStudents = ModuleStudents::where('id', $id)->first();
+
+        $kamus = Kamus::orderBy('id', 'DESC')->get();
+        return view('users.dictionary.index', [
+            'kamus' => $kamus,
+            'moduleStudentId' => $moduleStudents->id,
+            'user' => $request->user()
+        ]);
     }
     
 
