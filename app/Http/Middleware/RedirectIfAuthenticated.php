@@ -19,14 +19,10 @@ class RedirectIfAuthenticated
     {
         $guards = empty($guards) ? [null] : $guards;
 
-        // Mendapatkan pengguna yang sedang login
-        $user = Auth::user();
-
-        $moduleStudent = \App\Models\ModuleStudents::where('user_id', $user->id)->first();
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect()->route('user.dashboard', $moduleStudent->id);
+                return redirect()->route('pilih-bahasa');
             }
         }
 
