@@ -50,6 +50,13 @@ class BookmarkController extends Controller
         }
     }
 
+    public function showModules()
+    {
+        $modules = ModuleBahasa::all(); // Atau gunakan query sesuai kebutuhan
+        return view('learning-module', compact('modules'));
+    }
+
+
     public function destroy(Bookmark $bookmark)
     {
         if ($bookmark->user_id !== auth()->id()) {

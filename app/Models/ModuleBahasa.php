@@ -37,4 +37,15 @@ class ModuleBahasa extends Model
     public function studentsprogress(){
         return $this->belongsToMany(User::class, 'user_progress', 'module_bahasa_id', 'user_id');
     }
+
+    public function isBookmarkedByUser($userId)
+    {
+        return $this->bookmarks()->where('user_id', $userId)->exists();
+    }
+
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class, 'module_bahasa_id');
+    }
+
 }
