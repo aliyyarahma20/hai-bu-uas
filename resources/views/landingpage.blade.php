@@ -42,12 +42,12 @@
 
             <!---Home--->
             <section id="home" class="relative h-[85vh] bg-[url({{asset('image/sawah.png')}})] bg-cover bg-center bg-no-repeat">
-            <div class="absolute inset-0 sm:bg-transparent sm:from-white/95 sm:to-white/25 ltr:sm:bg-gradient-to-r rtl:sm:bg-gradient-to-l"></div>
+            <div class="absolute inset-0 bg-black/50 sm:bg-gradient-to-r from-black/50 to-black/25"></div>
             <div class="relative mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:flex lg:h-full lg:items-center lg:px-8">
                 <div class="max-w-xl text-left">
                 <h1 class="text-2xl font-bold text-[#B2C9AD] sm:text-4xl">
                     <strong class="block font-extrabold text-white mt-2"> Mulailah Petualangan </strong>
-                    <strong class="block font-extrabold text-white mt-2"> Belajar Bahasamu Saat Ini </strong>
+                    <strong class="block font-extrabold text-[#91AC8F] mt-2"> Belajar Bahasamu Saat Ini </strong>
                 </h1>
             
                 <p class="mt-4 max-w-lg text-white sm:text-xl">
@@ -208,7 +208,7 @@
                     <ul class="mt-8 flex gap-6">      
                     <li>
                         <a
-                        href="#"
+                        href="https://www.instagram.com/naditazn?igsh=MTE4ZTVnNGJnazYyOQ=="
                         rel="noreferrer"
                         target="_blank"
                         class="text-[#4B5945] transition hover:opacity-75"
@@ -227,7 +227,7 @@
 
                     <li>
                         <a
-                        href="#"
+                        href="https://github.com/aliyyarahma20/hai-bu-uas"
                         rel="noreferrer"
                         target="_blank"
                         class="text-[#4B5945] transition hover:opacity-75"
@@ -247,7 +247,7 @@
                         <!-- WhatsApp Icon -->
                     <li>
                     <a
-                        href="https://wa.me/123456789"
+                        href="https://chat.whatsapp.com/Eie2PMbXltAG4taiHxjW66"
                         rel="noreferrer"
                         target="_blank"
                         class="text-[#4B5945] transition hover:opacity-75"
@@ -262,7 +262,7 @@
                     </li>
 
                     <li>
-                        <a href="#" rel="noreferrer" target="_blank" class="text-[#4B5945] transition hover:opacity-75">
+                        <a href="mailto:arsyverenada@gmail.com" rel="noreferrer" target="_blank" class="text-[#4B5945] transition hover:opacity-75">
                         <span class="sr-only">Gmail</span>
                         <i class="fa fa-envelope-o" style="font-size: large;" aria-hidden="true"></i>
                         </a>
@@ -287,9 +287,9 @@
                         <a href="#" class="text-[#4B5945] transition hover:opacity-75"> Kamus </a>
                         </li>
             
-                        <li>
+                        <!-- <li>
                         <a href="#" class="text-[#4B5945] transition hover:opacity-75"> Papan Peringkat </a>
-                        </li>
+                        </li> -->
                     </ul>
                     </div>
             

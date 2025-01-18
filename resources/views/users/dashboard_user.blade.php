@@ -124,7 +124,9 @@ $colors = ['bg-[#4B5945]', 'bg-[#66785F]', 'bg-[#B2C9AD]'];
                 <div class="flex justify-between items-start">
                     <div>
                         <h3 class="font-medium text-[#4B5945]">{{ $bookmark->title }}</h3>
-                        <p class="mt-2 text-sm text-gray-600">{{ Str::limit($bookmark->moduleBahasa->description ?? 'Modul Bahasa', 100) }}</p>
+                        <p class="mt-2 text-sm text-gray-600">
+                            {{ Str::limit($bookmark->moduleBahasa->description ?? 'Modul Bahasa', 200, '...') }}
+                        </p>
                     </div>
                     
                     <!-- Action Buttons -->
