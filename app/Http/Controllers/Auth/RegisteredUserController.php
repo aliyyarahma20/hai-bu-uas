@@ -54,6 +54,7 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'photos' => 'produc_photos/profile.jpg',
         ]);
 
         $user->assignRole('student');

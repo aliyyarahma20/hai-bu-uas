@@ -55,6 +55,7 @@ class RolePermissionSeeder extends Seeder
             [
                 'name' => 'Treece',
                 'password' => bcrypt('1223334444'),
+                'photos' => 'produc_photos/profile.jpg',
             ]
         );
 
